@@ -23,32 +23,32 @@
     <ProjectGuid>{6044269E-A281-456D-8BA4-A7B38DE9415C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My7WondersDuelGameEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -90,12 +90,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;SFML_STATIC</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Libraries\Documents\GitHub\7-Wonders-Duel\7-Wonders-Duel\7-Wonders-Duel;C:\SFML\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\7-Wonders-Duel\7-Wonders-Duel;</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>D:\Libraries\Documents\GitHub\7-Wonders-Duel\7-Wonders-Duel\7-Wonders-Duel;C:\SFML\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib;C:\Program Files (x86)\GnuWin32\lib;D:\Libraries\Documents\GitHub\7-Wonders-Duel\7-Wonders-Duel\7-Wonders-Duel;C:\SFML\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;gdi32.lib;sfml-audio-s-d.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-system-s-d.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -106,12 +106,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;SFML_STATIC</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\fpizz\Source\Repos\7-Wonders-Duel3\7-Wonders-Duel\7-Wonders-Duel;C:\Users\fpizz\Source\Repos\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\7-Wonders-Duel\7-Wonders-Duel;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;gdi32.lib;sfml-audio-s-d.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-system-s-d.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\fpizz\Source\Repos\SFML-2.4.2\lib;C:\Users\fpizz\Source\Repos\7-Wonders-Duel3\7-Wonders-Duel\7-Wonders-Duel;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;opengl32.lib;freetype.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-system-s-d.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib;C:\Program Files (x86)\GnuWin32\lib;C:\Users\fpizz\Source\Repos\SFML-2.4.2\lib;C:\Users\fpizz\Source\Repos\7-Wonders-Duel3\7-Wonders-Duel\7-Wonders-Duel;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,11 +123,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\7-Wonders-Duel\7-Wonders-Duel;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib;C:\Program Files (x86)\GnuWin32\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,11 +141,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\7-Wonders-Duel\7-Wonders-Duel;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib;C:\Program Files (x86)\GnuWin32\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -172,6 +176,15 @@
     <ClInclude Include="WonderPickerState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Card.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ConflictPawn_DEP.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Effects_DEP.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Initialization_DEP.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\MilitaryToken.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Player.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ProgressToken.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Test.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\World.cpp" />
     <ClCompile Include="CardDestroyerState.cpp" />
     <ClCompile Include="CardPickerState.cpp" />
     <ClCompile Include="DiscardedCardPickerState.cpp" />

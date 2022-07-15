@@ -202,6 +202,14 @@ void Game::loadTextures()
 	textureManager.loadTexture("Military Token 2", "Resources/BoardItems/MilitaryToken_2CoinDestruction.jpg");
 	textureManager.loadTexture("Military Token 5", "Resources/BoardItems/MilitaryToken_5CoinDestruction.jpg");
 
+	textureManager.loadTexture("Wood", "Resources/Icons/wood.png");
+	textureManager.loadTexture("Stone", "Resources/Icons/stone.png");
+	textureManager.loadTexture("Clay", "Resources/Icons/clay.png");
+	textureManager.loadTexture("Paper", "Resources/Icons/paper.png");
+	textureManager.loadTexture("Glass", "Resources/Icons/glass.png");
+	textureManager.loadTexture("Wild Basic", "Resources/Icons/wildbasic.png");
+	textureManager.loadTexture("Wild Adv", "Resources/Icons/wildadv.png");
+
 }
 
 void Game::loadFonts()

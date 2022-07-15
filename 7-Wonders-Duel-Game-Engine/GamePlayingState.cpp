@@ -146,6 +146,8 @@ void GamePlayingState::draw(const float dt)
 	p_game->window.draw(player2Papyrus);
 	p_game->window.draw(player2Glass);
 
+	drawResourceIcons(dt);
+
 
 	p_game->window.draw(player1City);
 	p_game->window.draw(player2City);
@@ -193,6 +195,68 @@ void GamePlayingState::draw(const float dt)
 	if (p_game->world.player2.flags.piraeusResourcesFlag == true) p_game->window.draw(mPlayer2PiraeusFlag);
 	if (p_game->world.player2.flags.caravenseryResourcesFlag == true) p_game->window.draw(mPlayer2CaravenseryFlag);
 	if (p_game->world.player2.flags.theGreatLighthouseResourcesFlag == true) p_game->window.draw(mPlayer2TheGreatLighthouseFlag);
+}
+
+void GamePlayingState::drawResourceIcons(const float dt)
+{
+	for (int i = 0; i < min(p_game->world.player1.getWood(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spWoodP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getStone(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spStoneP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getClay(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spClayP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getPapyrus(), MAX_RESOURCE_ADV); ++i)
+	{
+		p_game->window.draw(spPaperP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getGlass(), MAX_RESOURCE_ADV); ++i)
+	{
+		p_game->window.draw(spGlassP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getWildBasic(), MAX_RESOURCE_BASIC_WILD); ++i)
+	{
+		p_game->window.draw(spWildBasicP1[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player1.getWildAdv(), MAX_RESOURCE_ADV_WILD); ++i)
+	{
+		p_game->window.draw(spWildAdvP1[i]);
+	}
+
+
+	for (int i = 0; i < min(p_game->world.player2.getWood(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spWoodP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getStone(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spStoneP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getClay(), MAX_RESOURCE_BASIC); ++i)
+	{
+		p_game->window.draw(spClayP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getPapyrus(), MAX_RESOURCE_ADV); ++i)
+	{
+		p_game->window.draw(spPaperP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getGlass(), MAX_RESOURCE_ADV); ++i)
+	{
+		p_game->window.draw(spGlassP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getWildBasic(), MAX_RESOURCE_BASIC_WILD); ++i)
+	{
+		p_game->window.draw(spWildBasicP2[i]);
+	}
+	for (int i = 0; i < min(p_game->world.player2.getWildAdv(), MAX_RESOURCE_ADV_WILD); ++i)
+	{
+		p_game->window.draw(spWildAdvP2[i]);
+	}
 }
 
 void GamePlayingState::update(const float dt)
@@ -531,66 +595,66 @@ GamePlayingState::GamePlayingState(Game * game)
 	civilianVictorySound.setBuffer(p_game->soundManager.soundMap.at("Civilian Victory"));
 
 	for (int i = 0; i < 20; ++i)
+	{
+		if (p_game->world.getAge() == 1)
 		{
-			if (p_game->world.getAge() == 1)
+			mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
+
+			mCardSprites[i].setScale(0.5f, 0.5f);
+
+			if (i == 2 || i == 3 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12 || i == 13)
 			{
-				mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
-
-				mCardSprites[i].setScale(0.5f, 0.5f);
-
-				if (i == 2 || i == 3 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12 || i == 13)
-				{
-					mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 1 Back"));
-					//mCardSprites[i].setColor(sf::Color(255, 255, 255, 200)); // for transparency, if desired
-				}
-				else
-				{
-					mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
-				}
+				mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 1 Back"));
+				//mCardSprites[i].setColor(sf::Color(255, 255, 255, 200)); // for transparency, if desired
 			}
-
-			if (p_game->world.getAge() == 2)
+			else
 			{
-				mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
-
-				
-				mCardSprites[i].setScale(0.5f, 0.5f);
-
-				if (i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 15 || i == 16 || i == 17)
-				{
-					mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 2 Back"));
-				}
-				else
-				{
-					mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
-				}
-
-				
+				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
-			if (p_game->world.getAge() == 3)
-			{
-				mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
-
-				mCardSprites[i].setScale(0.5f, 0.5f);
-
-				if (i == 2 || i == 3 || i == 4 || i == 9 || i == 10 || i == 15 || i == 16 || i == 17)
-				{
-					if (p_game->world.board[i]->getAge() == AGE_GUILD)
-					{
-						mCardSprites[i].setTexture(p_game->textureManager.getRef("Guild Back"));
-					}
-					else
-					{
-						mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 3 Back"));
-					}
-				}
-				else
-				{
-					mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
-				}
-			}
-
 		}
+
+		if (p_game->world.getAge() == 2)
+		{
+			mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
+
+				
+			mCardSprites[i].setScale(0.5f, 0.5f);
+
+			if (i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 15 || i == 16 || i == 17)
+			{
+				mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 2 Back"));
+			}
+			else
+			{
+				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
+			}
+
+				
+		}
+		if (p_game->world.getAge() == 3)
+		{
+			mCardSprites[i].setPosition(p_game->world.board[i]->getPosition()[0], p_game->world.board[i]->getPosition()[1]);
+
+			mCardSprites[i].setScale(0.5f, 0.5f);
+
+			if (i == 2 || i == 3 || i == 4 || i == 9 || i == 10 || i == 15 || i == 16 || i == 17)
+			{
+				if (p_game->world.board[i]->getAge() == AGE_GUILD)
+				{
+					mCardSprites[i].setTexture(p_game->textureManager.getRef("Guild Back"));
+				}
+				else
+				{
+					mCardSprites[i].setTexture(p_game->textureManager.getRef("Age 3 Back"));
+				}
+			}
+			else
+			{
+				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
+			}
+		}
+
+	}
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -683,6 +747,75 @@ GamePlayingState::GamePlayingState(Game * game)
 	militaryToken5P2.setScale(0.90f, 0.90f);
 	militaryToken5P2.setOrigin(militaryToken5P2.getGlobalBounds().width / 2, militaryToken5P2.getGlobalBounds().height / 2);
 	militaryToken5P2.setPosition(187.0f, 695.0f);
+
+	for (int i = 0; i < MAX_RESOURCE_BASIC; ++i)
+	{
+		spWoodP1[i].setTexture(p_game->textureManager.getRef("Wood"));
+		spStoneP1[i].setTexture(p_game->textureManager.getRef("Stone"));
+		spClayP1[i].setTexture(p_game->textureManager.getRef("Clay"));
+		spWoodP1[i].setScale(0.5f, 0.5f);
+		spStoneP1[i].setScale(0.5f, 0.5f);
+		spClayP1[i].setScale(0.5f, 0.5f);
+		spWoodP1[i].setOrigin(spWoodP1[i].getGlobalBounds().width / 2, spWoodP1[i].getGlobalBounds().height / 2);
+		spStoneP1[i].setOrigin(spStoneP1[i].getGlobalBounds().width / 2, spStoneP1[i].getGlobalBounds().height / 2);
+		spClayP1[i].setOrigin(spClayP1[i].getGlobalBounds().width / 2, spClayP1[i].getGlobalBounds().height / 2);
+		spWoodP1[i].setPosition(130.0f + 20.0f*i, 20.0f);
+		spStoneP1[i].setPosition(230.0f + 20.0f * i, 20.0f);
+		spClayP1[i].setPosition(330.0f + 20.0f * i, 20.0f);
+		spWoodP2[i].setTexture(p_game->textureManager.getRef("Wood"));
+		spStoneP2[i].setTexture(p_game->textureManager.getRef("Stone"));
+		spClayP2[i].setTexture(p_game->textureManager.getRef("Clay"));
+		spWoodP2[i].setScale(0.5f, 0.5f);
+		spStoneP2[i].setScale(0.5f, 0.5f);
+		spClayP2[i].setScale(0.5f, 0.5f);
+		spWoodP2[i].setOrigin(spWoodP2[i].getGlobalBounds().width / 2, spWoodP2[i].getGlobalBounds().height / 2);
+		spStoneP2[i].setOrigin(spStoneP2[i].getGlobalBounds().width / 2, spStoneP2[i].getGlobalBounds().height / 2);
+		spClayP2[i].setOrigin(spClayP2[i].getGlobalBounds().width / 2, spClayP2[i].getGlobalBounds().height / 2);
+		spWoodP2[i].setPosition(130.0f + 20.0f * i, 845.0f);
+		spStoneP2[i].setPosition(230.0f + 20.0f * i, 845.0f);
+		spClayP2[i].setPosition(330.0f + 20.0f * i, 845.0f);
+	}
+	for (int i = 0; i < MAX_RESOURCE_BASIC_WILD; ++i)
+	{
+		spWildBasicP1[i].setTexture(p_game->textureManager.getRef("Wild Basic"));
+		spWildBasicP1[i].setScale(0.5f, 0.5f);
+		spWildBasicP1[i].setOrigin(spWildBasicP1[i].getGlobalBounds().width / 2, spWildBasicP1[i].getGlobalBounds().height / 2);
+		spWildBasicP1[i].setPosition(430.0f + 20.0f * i, 20.0f);
+		spWildBasicP2[i].setTexture(p_game->textureManager.getRef("Wild Basic"));
+		spWildBasicP2[i].setScale(0.5f, 0.5f);
+		spWildBasicP2[i].setOrigin(spWildBasicP2[i].getGlobalBounds().width / 2, spWildBasicP2[i].getGlobalBounds().height / 2);
+		spWildBasicP2[i].setPosition(430.0f + 20.0f * i, 845.0f);
+	}
+	for (int i = 0; i < MAX_RESOURCE_ADV; ++i)
+	{
+		spPaperP1[i].setTexture(p_game->textureManager.getRef("Paper"));
+		spGlassP1[i].setTexture(p_game->textureManager.getRef("Glass"));
+		spPaperP1[i].setScale(0.5f, 0.5f);
+		spGlassP1[i].setScale(0.5f, 0.5f);
+		spPaperP1[i].setOrigin(spPaperP1[i].getGlobalBounds().width / 2, spPaperP1[i].getGlobalBounds().height / 2);
+		spGlassP1[i].setOrigin(spGlassP1[i].getGlobalBounds().width / 2, spGlassP1[i].getGlobalBounds().height / 2);
+		spPaperP1[i].setPosition(550.0f + 20.0f * i, 20.0f);
+		spGlassP1[i].setPosition(650.0f + 20.0f * i, 20.0f);
+		spPaperP2[i].setTexture(p_game->textureManager.getRef("Paper"));
+		spGlassP2[i].setTexture(p_game->textureManager.getRef("Glass"));
+		spPaperP2[i].setScale(0.5f, 0.5f);
+		spGlassP2[i].setScale(0.5f, 0.5f);
+		spPaperP2[i].setOrigin(spPaperP2[i].getGlobalBounds().width / 2, spPaperP2[i].getGlobalBounds().height / 2);
+		spGlassP2[i].setOrigin(spGlassP2[i].getGlobalBounds().width / 2, spGlassP2[i].getGlobalBounds().height / 2);
+		spPaperP2[i].setPosition(550.0f + 20.0f * i, 845.0f);
+		spGlassP2[i].setPosition(650.0f + 20.0f * i, 845.0f);
+	}
+	for (int i = 0; i < MAX_RESOURCE_ADV_WILD; ++i)
+	{
+		spWildAdvP1[i].setTexture(p_game->textureManager.getRef("Wild Adv"));
+		spWildAdvP1[i].setScale(0.5f, 0.5f);
+		spWildAdvP1[i].setOrigin(spWildAdvP1[i].getGlobalBounds().width / 2, spWildAdvP1[i].getGlobalBounds().height / 2);
+		spWildAdvP1[i].setPosition(750.0f + 20.0f * i, 20.0f);
+		spWildAdvP2[i].setTexture(p_game->textureManager.getRef("Wild Adv"));
+		spWildAdvP2[i].setScale(0.5f, 0.5f);
+		spWildAdvP2[i].setOrigin(spWildAdvP2[i].getGlobalBounds().width / 2, spWildAdvP2[i].getGlobalBounds().height / 2);
+		spWildAdvP2[i].setPosition(750.0f + 20.0f * i, 845.0f);
+	}
 
 
 

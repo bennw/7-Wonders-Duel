@@ -3,10 +3,11 @@
 
 int main()
 {
-	Game game;
+	Game* game = new Game();
 
-	game.pushState(new GameStateStart(&game));
-	game.gameLoop();
+	game->pushState(new GameStateStart(game));
+	game->gameLoop();
 
+	delete game;
 	return 0;
 }

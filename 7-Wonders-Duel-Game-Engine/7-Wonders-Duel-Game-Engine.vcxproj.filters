@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\7W">
+      <UniqueIdentifier>{2fd94898-3960-4e5d-9d80-8b8e41c68244}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -124,6 +127,33 @@
     </ClCompile>
     <ClCompile Include="DiscardedPTPickerState.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Card.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ConflictPawn_DEP.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Effects_DEP.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Initialization_DEP.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\MilitaryToken.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Player.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ProgressToken.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Test.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\World.cpp">
+      <Filter>Source Files\7W</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

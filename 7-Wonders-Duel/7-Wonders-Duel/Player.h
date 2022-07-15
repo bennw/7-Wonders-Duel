@@ -34,6 +34,8 @@ namespace Seven_Wonders {
 		void setPapyrus(int changeInPapyrus);
 		int getGlass();
 		void setGlass(int changeInGlass);
+		int getWildBasic();
+		int getWildAdv();
 		int getDiscardGoldValue();
 		void resetResources();
 		vector<Card*> playerCity;
@@ -72,10 +74,10 @@ namespace Seven_Wonders {
 			bool strategyPTFlag = false;
 			bool theologyPTFlag = false;
 			bool ubanismPTFlag = false;
-			bool forumResourcesFlag = false;
-			bool caravenseryResourcesFlag = false;
-			bool theGreatLighthouseResourcesFlag = false;
-			bool piraeusResourcesFlag = false;
+			bool forumResourcesFlag = true;
+			bool caravenseryResourcesFlag = true;
+			bool theGreatLighthouseResourcesFlag = true;
+			bool piraeusResourcesFlag = true;
 			bool merchantsGuildFlag = false;
 			bool shipownersGuildFlag = false;
 			bool buildersGuildFlag = false;
@@ -91,11 +93,11 @@ namespace Seven_Wonders {
 		int mPlayerNumber;
 		bool mGoesFirst;
 		int mCoins = 7;
-		int mWood = 0;
-		int mStone = 0;
-		int mClay = 0;
-		int mPapyrus = 0;
-		int mGlass = 0;
+		int mWood = 4;
+		int mStone = 4;
+		int mClay = 4;
+		int mPapyrus = 2;
+		int mGlass = 2;
 		bool mStrategyFlag = false;
 		
 		static const int STARTING_COINS = 7;

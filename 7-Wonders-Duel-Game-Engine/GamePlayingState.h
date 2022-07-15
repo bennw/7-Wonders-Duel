@@ -5,6 +5,10 @@
 
 #include "GameState.h"
 
+#define MAX_RESOURCE_BASIC 4
+#define MAX_RESOURCE_ADV 2
+#define MAX_RESOURCE_BASIC_WILD 2
+#define MAX_RESOURCE_ADV_WILD 2
 
 class GamePlayingState : public GameState
 {
@@ -114,6 +118,22 @@ public:
 	sf::Sprite militaryToken2P2;
 	sf::Sprite militaryToken5P2;
 
+	sf::Sprite spWoodP1[MAX_RESOURCE_BASIC];
+	sf::Sprite spStoneP1[MAX_RESOURCE_BASIC];
+	sf::Sprite spClayP1[MAX_RESOURCE_BASIC];
+	sf::Sprite spPaperP1[MAX_RESOURCE_ADV];
+	sf::Sprite spGlassP1[MAX_RESOURCE_ADV];
+	sf::Sprite spWildBasicP1[MAX_RESOURCE_BASIC_WILD];
+	sf::Sprite spWildAdvP1[MAX_RESOURCE_ADV_WILD];
+
+	sf::Sprite spWoodP2[MAX_RESOURCE_BASIC];
+	sf::Sprite spStoneP2[MAX_RESOURCE_BASIC];
+	sf::Sprite spClayP2[MAX_RESOURCE_BASIC];
+	sf::Sprite spPaperP2[MAX_RESOURCE_ADV];
+	sf::Sprite spGlassP2[MAX_RESOURCE_ADV];
+	sf::Sprite spWildBasicP2[MAX_RESOURCE_BASIC_WILD];
+	sf::Sprite spWildAdvP2[MAX_RESOURCE_ADV_WILD];
+
 	sf::Sprite mCardSprites[20] = {
 		mCard1, mCard2,
 		mCard3, mCard4, mCard5,
@@ -221,6 +241,7 @@ public:
 
 
 	virtual void draw(const float dt);
+	virtual void drawResourceIcons(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
 

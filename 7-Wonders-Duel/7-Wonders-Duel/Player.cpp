@@ -110,6 +110,16 @@ namespace Seven_Wonders {
 		return mGlass;
 	}
 
+	int Player::getWildBasic()
+	{
+		return flags.theGreatLighthouseResourcesFlag + flags.caravenseryResourcesFlag;
+	}
+
+	int Player::getWildAdv()
+	{
+		return flags.piraeusResourcesFlag + flags.forumResourcesFlag;
+	}
+
 
 	void Player::setGlass(int changeInGlass)
 	{
