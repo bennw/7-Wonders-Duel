@@ -204,6 +204,7 @@ namespace Seven_Wonders {
 			board[clickedCardIndex] = nullptr;
 
 			exposeCards();
+			updateGameState();
 		}
 
 		if (!progressTokenState)
@@ -385,6 +386,7 @@ namespace Seven_Wonders {
 		board[clickedCardIndex] = nullptr;
 
 		exposeCards();
+		updateGameState();
 
 		if (currentPlayer == &player1) currentPlayer = &player2;
 		else if (currentPlayer == &player2) currentPlayer = &player1;
@@ -454,6 +456,7 @@ namespace Seven_Wonders {
 		board[clickedCardIndex] = nullptr;
 
 		exposeCards();
+		updateGameState();
 		if (buildFromDiscard == false && buildPTFromDiscard == false)
 		{
 			if (currentPlayer == &player1 && repeatTurn == false) currentPlayer = &player2;
@@ -782,6 +785,38 @@ namespace Seven_Wonders {
 				}
 			}
 
+		}
+	}
+
+	void World::updateGameState()
+	{
+		bool isLinked;
+		for (int p = 0; p < 2; p++)
+		{
+			Player player = p ? player2 : player1;
+			
+			statePlayerCoins[p] = player.getCoins();
+
+			// cards
+			for (int c = 0; c < 20; ++c)
+			{
+				if (board[c] == nullptr)
+				{
+					stateCard[c][p] = 0;
+					continue;
+				}
+				stateCardCost[c][p] = -goldCostEx(player, *board[c], isLinked);
+				stateCardAfford[c][p] = stateCardCost[c][p] <= statePlayerCoins[p];
+				stateCardLinked[c][p] = isLinked;
+				stateCard[c][p] = board[c]->getFaceup() ? (board[c]->getExposed() ? 3 : 2) : 1;
+			}
+
+			// wonders
+			for (int w = 0; w < 4; ++w)
+			{
+				stateWonderCost[w][p] = -goldCostEx(player, *player.playerWonderDeck[w], isLinked);
+				stateWonderAfford[w][p] = stateWonderCost[w][p] <= statePlayerCoins[p];
+			}
 		}
 	}
 

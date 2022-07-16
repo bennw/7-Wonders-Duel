@@ -29,6 +29,8 @@ namespace Seven_Wonders {
 		void buildWonder(int wonderNumber, int clickCardIndex);
 		void destroyCard(int cardIndex, Player & player);
 		void exposeCards();
+		void updateGameState();
+
 		vector<Card> age1Deck;
 		vector<Card*> wonderCardDeck;
 		vector<Card> age2Deck;
@@ -41,6 +43,16 @@ namespace Seven_Wonders {
 		int wonderCount = 0; //value to store how many wonders have been built
 
 		Card * board[20];
+
+		// game state
+		int statePlayerCoins[2];
+		int stateCardCost[20][2];
+		bool stateCardAfford[20][2];
+		bool stateCardLinked[20][2];
+		short stateCard[20][2]; // 0 = NULL, 1 = facedown, 2 = faceup, 3 = exposed
+		int stateWonderCost[4][2];
+		int stateWonderAfford[4][2];
+		short stateWonder[4][2]; // 0 = unbuilt, 1 = built
 
 		void Setup();
 		int mCurrentPlayer;
