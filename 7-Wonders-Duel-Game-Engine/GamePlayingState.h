@@ -61,6 +61,8 @@ public:
 
 	sf::Text txtCostIndicatorP1[20];
 	sf::Text txtCostIndicatorP2[20];
+	sf::Text txtCostIndicatorWonderP1[4];
+	sf::Text txtCostIndicatorWonderP2[4];
 
 	// Sprite
 	sf::Sprite mConflictPawn;
@@ -138,6 +140,8 @@ public:
 
 	sf::Sprite spCostIndicatorP1[20];
 	sf::Sprite spCostIndicatorP2[20];
+	sf::Sprite spCostIndicatorWonderP1[20];
+	sf::Sprite spCostIndicatorWonderP2[20];
 
 	sf::Sprite mCardSprites[20] = {
 		mCard1, mCard2,

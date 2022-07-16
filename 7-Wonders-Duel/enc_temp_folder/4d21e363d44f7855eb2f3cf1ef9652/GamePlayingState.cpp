@@ -10,7 +10,7 @@
 
 #define DRAW_TXT_COIN_OFFSET_X 18
 #define DRAW_TXT_COIN_OFFSET_Y 20
-#define SF_COLOR_DARKRED sf::Color(175, 64, 36)
+#define SF_COLOR_ROSE sf::Color(175, 64, 36)
 
 void GamePlayingState::draw(const float dt)
 {
@@ -37,8 +37,8 @@ void GamePlayingState::draw(const float dt)
 				isAffordP2 = goldCostP2 <= p_game->world.player2.getCoins();
 				txtCostIndicatorP1[i].setString(to_string(goldCostP1));
 				txtCostIndicatorP2[i].setString(to_string(goldCostP2));
-				txtCostIndicatorP1[i].setFillColor(isAffordP1 ? (isLinkedP1 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
-				txtCostIndicatorP2[i].setFillColor(isAffordP2 ? (isLinkedP2 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
+				txtCostIndicatorP1[i].setFillColor(isAffordP1 ? (isLinkedP1 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_ROSE);
+				txtCostIndicatorP2[i].setFillColor(isAffordP2 ? (isLinkedP2 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_ROSE);
 				rect1 = txtCostIndicatorP1[i].getLocalBounds();
 				rect2 = txtCostIndicatorP2[i].getLocalBounds();
 				txtCostIndicatorP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
@@ -58,12 +58,12 @@ void GamePlayingState::draw(const float dt)
 		{
 			p_game->window.draw(mWonderBuiltSpritesP1[i]);
 		}
-		else if (p_game->world.player1.playerWonderDeck[i]->builtWonder == false && p_game->world.wonderCount < 7)
+		else if (p_game->world.player1.playerWonderDeck[0]->builtWonder == false && p_game->world.wonderCount < 7)
 		{
 			goldCostP1 = -p_game->world.goldCost(p_game->world.player1, *p_game->world.player1.playerWonderDeck[i]);
 			isAffordP1 = goldCostP1 <= p_game->world.player1.getCoins();
 			txtCostIndicatorWonderP1[i].setString(to_string(goldCostP1));
-			txtCostIndicatorWonderP1[i].setColor(isAffordP1 ? (isLinkedP1 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
+			txtCostIndicatorWonderP1[i].setColor(isAffordP1 ? (isLinkedP1 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_ROSE);
 			rect1 = txtCostIndicatorWonderP1[i].getLocalBounds();
 			txtCostIndicatorWonderP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
 			p_game->window.draw(spCostIndicatorWonderP1[i]);
@@ -73,12 +73,12 @@ void GamePlayingState::draw(const float dt)
 		{
 			p_game->window.draw(mWonderBuiltSpritesP2[i]);
 		}
-		else if (p_game->world.player2.playerWonderDeck[i]->builtWonder == false && p_game->world.wonderCount < 7)
+		else if (p_game->world.player2.playerWonderDeck[0]->builtWonder == false && p_game->world.wonderCount < 7)
 		{
 			goldCostP2 = -p_game->world.goldCost(p_game->world.player2, *p_game->world.player2.playerWonderDeck[i]);
 			isAffordP2 = goldCostP2 <= p_game->world.player2.getCoins();
 			txtCostIndicatorWonderP2[i].setString(to_string(goldCostP2));
-			txtCostIndicatorWonderP2[i].setColor(isAffordP2 ? (isLinkedP2 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
+			txtCostIndicatorWonderP2[i].setColor(isAffordP2 ? (isLinkedP2 ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_ROSE);
 			rect2 = txtCostIndicatorWonderP2[i].getLocalBounds();
 			txtCostIndicatorWonderP2[i].setOrigin(rect2.left + rect2.width / 2.0f, rect2.top + rect2.height / 2.0f);
 			p_game->window.draw(spCostIndicatorWonderP2[i]);
