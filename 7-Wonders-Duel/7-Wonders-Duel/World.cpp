@@ -1133,7 +1133,7 @@ namespace Seven_Wonders {
 	//allow to build wonder if true
 
 
-	bool World::canBuild(Player & currentPlayer, Card & card)
+	bool World::canLink(Player& currentPlayer, Card& card)
 	{
 		// Checking for link-building
 		for (vector<Card*>::iterator it = currentPlayer.playerCity.begin(); it != currentPlayer.playerCity.end(); ++it)
@@ -1149,6 +1149,12 @@ namespace Seven_Wonders {
 				return true;
 			}
 		}
+		return false;
+	}
+
+	bool World::canBuild(Player & currentPlayer, Card & card)
+	{
+		if (canLink(currentPlayer, card)) return true;
 
 		// Checking for Masonry and Architecture PTs
 		bool masonryDiscount = false;
@@ -2241,10 +2247,18 @@ namespace Seven_Wonders {
 
 	}
 
+	int World::goldCostEx(Player& currentPlayer, Card& card, bool &isLinked)
+	{
+		isLinked = false;
+
+		if (canLink(currentPlayer, card)) isLinked = true;
+		return goldCost(currentPlayer, card);
+	}
 	int World::goldCost(Player & currentPlayer, Card & card)
 	{
 		// Checking for link-building
-		if (buildByLink == true) return 0;
+		//if (buildByLink == true) return 0;
+		if (canLink(currentPlayer, card)) return 0;
 		
 		// Checking for Masonry and Architecture PTs
 		bool masonryDiscount = false;

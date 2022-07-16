@@ -59,6 +59,8 @@ public:
 	sf::Text progressTokenText4;
 	sf::Text progressTokenText5;
 
+	sf::Text txtCostIndicatorP1[20];
+	sf::Text txtCostIndicatorP2[20];
 
 	// Sprite
 	sf::Sprite mConflictPawn;
@@ -133,6 +135,9 @@ public:
 	sf::Sprite spGlassP2[MAX_RESOURCE_ADV];
 	sf::Sprite spWildBasicP2[MAX_RESOURCE_BASIC_WILD];
 	sf::Sprite spWildAdvP2[MAX_RESOURCE_ADV_WILD];
+
+	sf::Sprite spCostIndicatorP1[20];
+	sf::Sprite spCostIndicatorP2[20];
 
 	sf::Sprite mCardSprites[20] = {
 		mCard1, mCard2,

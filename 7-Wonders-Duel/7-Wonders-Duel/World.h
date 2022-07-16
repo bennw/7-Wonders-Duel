@@ -72,12 +72,14 @@ namespace Seven_Wonders {
 		bool playAge2Sound = false;
 		bool playAge3Sound = false;
 
-	
+
+		bool canLink(Player& currentPlayer, Card& card);
 		bool canBuild(Player & currentPlayer, Card & card);
 		void runCivilianVictory();
 		void doEffect(Player & currentPlayer, Card & card);
 		void doEffect(Player & currentPlayer, ProgressToken & progressToken); //overloaded function for doEffect for Progress Token
 		int goldCost(Player & currentPlayer, Card & card);
+		int goldCostEx(Player& currentPlayer, Card& card, bool &isLinked);
 
 		bool compareMilitary();
 

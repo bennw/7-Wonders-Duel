@@ -11,6 +11,9 @@
 
 void GamePlayingState::draw(const float dt)
 {
+	int goldCostP1, goldCostP2;
+	bool isLinkedP1, isLinkedP2, isAffordP1, isAffordP2;
+	sf::FloatRect rect1, rect2;
 	p_game->window.draw(background);
 
 	for (int i = 0; i < 20; ++i)
@@ -21,8 +24,27 @@ void GamePlayingState::draw(const float dt)
 			{
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
-
 			p_game->window.draw(mCardSprites[i]);
+
+			if (p_game->world.board[i]->getFaceup() == true)
+			{
+				goldCostP1 = -p_game->world.goldCostEx(p_game->world.player1, *p_game->world.board[i], isLinkedP1);
+				goldCostP2 = -p_game->world.goldCostEx(p_game->world.player2, *p_game->world.board[i], isLinkedP2);
+				isAffordP1 = goldCostP1 <= p_game->world.player1.getCoins();
+				isAffordP2 = goldCostP2 <= p_game->world.player2.getCoins();
+				txtCostIndicatorP1[i].setString(to_string(goldCostP1));
+				txtCostIndicatorP2[i].setString(to_string(goldCostP2));
+				txtCostIndicatorP1[i].setFillColor(isAffordP1 ? (isLinkedP1 ? sf::Color::Cyan : sf::Color::White) : sf::Color(255, 99, 71));
+				txtCostIndicatorP2[i].setFillColor(isAffordP2 ? (isLinkedP2 ? sf::Color::Cyan : sf::Color::White) : sf::Color(255, 99, 71));
+				rect1 = txtCostIndicatorP1[i].getLocalBounds();
+				rect2 = txtCostIndicatorP2[i].getLocalBounds();
+				txtCostIndicatorP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
+				txtCostIndicatorP2[i].setOrigin(rect2.left + rect2.width / 2.0f, rect2.top + rect2.height / 2.0f);
+				p_game->window.draw(spCostIndicatorP1[i]);
+				p_game->window.draw(spCostIndicatorP2[i]);
+				p_game->window.draw(txtCostIndicatorP1[i]);
+				p_game->window.draw(txtCostIndicatorP2[i]);
+			}
 		}
 	}
 
@@ -581,6 +603,9 @@ void GamePlayingState::handleInput()
 
 GamePlayingState::GamePlayingState(Game * game)
 {
+	int x1coin = 38, y1coin = 90, x2coin = 38, y2coin = 145;
+	int x1ctxt = x1coin +18, y1ctxt = y1coin +20, x2ctxt = x2coin +18, y2ctxt = y2coin +20;
+
 	p_game = game;
 	emptyCount = 0;
 
@@ -611,6 +636,10 @@ GamePlayingState::GamePlayingState(Game * game)
 			{
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
+			spCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1coin, p_game->world.board[i]->getPosition()[1] + y1coin);
+			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
+			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
+			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
 		}
 
 		if (p_game->world.getAge() == 2)
@@ -629,6 +658,10 @@ GamePlayingState::GamePlayingState(Game * game)
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
 
+			spCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1coin, p_game->world.board[i]->getPosition()[1] + y1coin);
+			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
+			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
+			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
 				
 		}
 		if (p_game->world.getAge() == 3)
@@ -652,6 +685,10 @@ GamePlayingState::GamePlayingState(Game * game)
 			{
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
+			spCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1coin, p_game->world.board[i]->getPosition()[1] + y1coin);
+			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
+			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
+			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
 		}
 
 	}
@@ -816,10 +853,21 @@ GamePlayingState::GamePlayingState(Game * game)
 		spWildAdvP2[i].setOrigin(spWildAdvP2[i].getGlobalBounds().width / 2, spWildAdvP2[i].getGlobalBounds().height / 2);
 		spWildAdvP2[i].setPosition(750.0f + 20.0f * i, 845.0f);
 	}
+	for (int i = 0; i < 20; ++i)
+	{
+		txtCostIndicatorP1[i].setFont(game->fontManager.getRef("Menu Font"));
+		txtCostIndicatorP1[i].setCharacterSize(28);
+		txtCostIndicatorP2[i].setFont(game->fontManager.getRef("Menu Font"));
+		txtCostIndicatorP2[i].setCharacterSize(28);
+		spCostIndicatorP1[i].setScale(0.75f, 0.75f);
+		spCostIndicatorP2[i].setScale(0.75f, 0.75f);
+		spCostIndicatorP1[i].setOrigin(spCostIndicatorP1[i].getGlobalBounds().width / 2, spCostIndicatorP1[i].getGlobalBounds().height / 2);
+		spCostIndicatorP2[i].setOrigin(spCostIndicatorP2[i].getGlobalBounds().width / 2, spCostIndicatorP2[i].getGlobalBounds().height / 2);
+		spCostIndicatorP1[i].setTexture(p_game->textureManager.getRef("Coin"));
+		spCostIndicatorP2[i].setTexture(p_game->textureManager.getRef("Coin"));
+	}
 
-
-
-	
+		
 
 
 	player1Turn.setFont(game->fontManager.getRef("Menu Font"));
@@ -979,6 +1027,9 @@ GamePlayingState::GamePlayingState(Game * game)
 
 void GamePlayingState::resetSprites()
 {
+	int x1coin = 38, y1coin = 90, x2coin = 38, y2coin = 145;
+	int x1ctxt = x1coin + 18, y1ctxt = y1coin + 20, x2ctxt = x2coin + 18, y2ctxt = y2coin + 20;
+
 	for (int i = 0; i < 20; i++)
 	{
 		if (p_game->world.getAge() == 2)
@@ -995,6 +1046,10 @@ void GamePlayingState::resetSprites()
 			{
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
+			spCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1coin, p_game->world.board[i]->getPosition()[1] + y1coin);
+			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
+			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
+			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
 		}
 		else if (p_game->world.getAge() == 3)
 		{
@@ -1017,6 +1072,10 @@ void GamePlayingState::resetSprites()
 			{
 				mCardSprites[i].setTexture(p_game->textureManager.getRef(p_game->world.board[i]->getName()));
 			}
+			spCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1coin, p_game->world.board[i]->getPosition()[1] + y1coin);
+			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
+			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
+			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
 		}
 		
 	}

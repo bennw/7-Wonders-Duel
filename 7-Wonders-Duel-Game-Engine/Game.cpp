@@ -101,7 +101,7 @@ void Game::loadTextures()
 	textureManager.loadTexture("Game Board", "Resources/BoardItems/gameboard.png");
 	textureManager.loadTexture("GameStateStart Background", "Resources/Backgrounds/gamestartbackground.jpg");
 	textureManager.loadTexture("GameStateStart Title", "Resources/Backgrounds/gamestarttitle.png");
-	textureManager.loadTexture("GameStatePlaying Background", "Resources/Backgrounds/gameplayingbackground.jpg");
+	textureManager.loadTexture("GameStatePlaying Background", "Resources/Backgrounds/gameplayingbackgrounddark.jpg");
 	textureManager.loadTexture("Age 1 Back", "Resources/CardImages/age1back.jpg");
 	textureManager.loadTexture("Age 2 Back", "Resources/CardImages/age2back.jpg");
 	textureManager.loadTexture("Age 3 Back", "Resources/CardImages/age3back.jpg");
@@ -209,6 +209,7 @@ void Game::loadTextures()
 	textureManager.loadTexture("Glass", "Resources/Icons/glass.png");
 	textureManager.loadTexture("Wild Basic", "Resources/Icons/wildbasic.png");
 	textureManager.loadTexture("Wild Adv", "Resources/Icons/wildadv.png");
+	textureManager.loadTexture("Coin", "Resources/Icons/coin.png");
 
 }
 
