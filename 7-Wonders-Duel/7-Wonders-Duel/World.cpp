@@ -159,10 +159,6 @@ namespace Seven_Wonders {
 		}
 		else if (buildFromDiscard == false)
 		{
-			currentPlayer->playerCity.push_back(board[clickedCardIndex]);
-
-			doEffect(*currentPlayer, *board[clickedCardIndex]);
-
 			//if not linking used then drain resource of player to build card
 			if (buildByLink == false)
 			{
@@ -201,6 +197,10 @@ namespace Seven_Wonders {
 				buildByLink = false;
 			}
 
+			currentPlayer->playerCity.push_back(board[clickedCardIndex]);
+
+			doEffect(*currentPlayer, *board[clickedCardIndex]);
+
 			board[clickedCardIndex] = nullptr;
 
 			exposeCards();
@@ -237,27 +237,22 @@ namespace Seven_Wonders {
 				{
 					currentPlayer->playerPT1 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 1)
 				{
 					currentPlayer->playerPT2 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 2)
 				{
 					currentPlayer->playerPT3 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 3)
 				{
 					currentPlayer->playerPT4 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 4)
 				{
 					currentPlayer->playerPT5 = progressTokenDeck[progressTokenNumber];
 				}
-
 			}
 
 			if (currentPlayer == &player2)
@@ -266,31 +261,24 @@ namespace Seven_Wonders {
 				{
 					currentPlayer->playerPT1 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 1)
 				{
 					currentPlayer->playerPT2 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 2)
 				{
 					currentPlayer->playerPT3 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 3)
 				{
 					currentPlayer->playerPT4 = progressTokenDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 4)
 				{
 					currentPlayer->playerPT5 = progressTokenDeck[progressTokenNumber];
 				}
-
 			}
-
 			doEffect(*currentPlayer, *progressTokenDeck[progressTokenNumber]);
-
 
 			progressTokenDeck[progressTokenNumber] = nullptr;
 		}
@@ -302,27 +290,22 @@ namespace Seven_Wonders {
 				{
 					currentPlayer->playerPT1 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 1)
 				{
 					currentPlayer->playerPT2 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 2)
 				{
 					currentPlayer->playerPT3 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 3)
 				{
 					currentPlayer->playerPT4 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player1CountPT == 4)
 				{
 					currentPlayer->playerPT5 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 			}
 
 			if (currentPlayer == &player2)
@@ -331,43 +314,32 @@ namespace Seven_Wonders {
 				{
 					currentPlayer->playerPT1 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 1)
 				{
 					currentPlayer->playerPT2 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 2)
 				{
 					currentPlayer->playerPT3 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 3)
 				{
 					currentPlayer->playerPT4 = progressTokenDiscardDeck[progressTokenNumber];
 				}
-
 				if (player2CountPT == 4)
 				{
 					currentPlayer->playerPT5 = progressTokenDiscardDeck[progressTokenNumber];
 				}
 
 			}
-
 			doEffect(*currentPlayer, *progressTokenDiscardDeck[progressTokenNumber]);
-
 
 			progressTokenDiscardDeck[progressTokenNumber] = nullptr;
 			buildPTFromDiscard = false;
 		}
 
-
-
-			if (currentPlayer == &player1) currentPlayer = &player2;
-			else if (currentPlayer == &player2) currentPlayer = &player1;
-
-
-		
+		if (currentPlayer == &player1) currentPlayer = &player2;
+		else if (currentPlayer == &player2) currentPlayer = &player1;
 	}
 
 	/* Run when a player picks the discard card option
@@ -1116,6 +1088,7 @@ namespace Seven_Wonders {
 				checkForChoosePlayer = true;
 				mAge = 2;
 				playAge2Sound = true; 
+				updateGameState();
 				return true;
 			}
 			else if (mAge == 2)
@@ -1127,6 +1100,7 @@ namespace Seven_Wonders {
 				checkForChoosePlayer = true;
 				mAge = 3;
 				playAge3Sound = true;
+				updateGameState();
 				return true;
 			}
 			else if (mAge == 3)
@@ -1175,12 +1149,12 @@ namespace Seven_Wonders {
 		{
 			if ((*it)->getLinkerValue1() == card.getLinkerValue1() && (*it)->getLinkerValue1() != NOLINKVALUE)
 			{
-				buildByLink = true;
+				//buildByLink = true;
 				return true;
 			}
 			else if ((*it)->getLinkerValue2() == card.getLinkerValue2() && (*it)->getLinkerValue2() != NOLINKVALUE)
 			{
-				buildByLink = true;
+				//buildByLink = true;
 				return true;
 			}
 		}
@@ -1189,7 +1163,11 @@ namespace Seven_Wonders {
 
 	bool World::canBuild(Player & currentPlayer, Card & card)
 	{
-		if (canLink(currentPlayer, card)) return true;
+		if (canLink(currentPlayer, card))
+		{
+			buildByLink = true;
+			return true;
+		}
 
 		// Checking for Masonry and Architecture PTs
 		bool masonryDiscount = false;
@@ -2293,7 +2271,10 @@ namespace Seven_Wonders {
 	{
 		// Checking for link-building
 		//if (buildByLink == true) return 0;
-		if (canLink(currentPlayer, card)) return 0;
+		if (canLink(currentPlayer, card))
+		{
+			return 0;
+		}
 		
 		// Checking for Masonry and Architecture PTs
 		bool masonryDiscount = false;
@@ -2539,19 +2520,19 @@ namespace Seven_Wonders {
 		int glassTradeCost = 0;
 
 		if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == false) woodTradeCost += (2 + opposingPlayer->getWood()) * woodCardDiff;
-		else if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == true) woodTradeCost += (1 + opposingPlayer->getWood()) * woodCardDiff;
+		else if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == true) woodTradeCost += 1 * woodCardDiff;
 
 		if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == false) stoneTradeCost += (2 + opposingPlayer->getStone()) * stoneCardDiff;
-		else if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == true) stoneTradeCost += (1 + opposingPlayer->getStone()) * stoneCardDiff;
+		else if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == true) stoneTradeCost += 1 * stoneCardDiff;
 
 		if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == false) clayTradeCost += (2 + opposingPlayer->getClay()) * clayCardDiff;
-		else if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == true) clayTradeCost += (1 + opposingPlayer->getClay()) * clayCardDiff;
+		else if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == true) clayTradeCost += 1 * clayCardDiff;
 
 		if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == false) papyrusTradeCost += (2 + opposingPlayer->getPapyrus()) * papyrusCardDiff;
-		else if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == true) papyrusTradeCost += (1 + opposingPlayer->getPapyrus()) * papyrusCardDiff;
+		else if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == true) papyrusTradeCost += 1 * papyrusCardDiff;
 
 		if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == false) glassTradeCost += (2 + opposingPlayer->getGlass()) * glassCardDiff;
-		else if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == true) glassTradeCost += (1 + opposingPlayer->getGlass()) * glassCardDiff;
+		else if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == true) glassTradeCost += 1 * glassCardDiff;
 
 
 		int totalCoinsNeeded = woodTradeCost + stoneTradeCost + clayTradeCost + papyrusTradeCost + glassTradeCost;
@@ -2562,7 +2543,6 @@ namespace Seven_Wonders {
 
 	bool World::compareMilitary() //function to determine who has the weaker military to determine whom will pick the turn order
 	{
-
 		int player1ConflictPoints = 0;
 		int player2ConflictPoints = 0;
 
