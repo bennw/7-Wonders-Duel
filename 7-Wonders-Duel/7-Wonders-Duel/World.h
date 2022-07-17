@@ -10,6 +10,8 @@
 #include "ProgressToken.h"
 #include "Card.h"
 #include "Game_Constants.h"
+#include "BoardState.h"
+#include "AI.h"
 
 using namespace std;
 using namespace Seven_Wonders;
@@ -30,6 +32,7 @@ namespace Seven_Wonders {
 		void destroyCard(int cardIndex, Player & player);
 		void exposeCards();
 		void updateGameState();
+		void setGameLog(int p, string strLog, int idxCard);
 
 		vector<Card> age1Deck;
 		vector<Card*> wonderCardDeck;
@@ -45,14 +48,8 @@ namespace Seven_Wonders {
 		Card * board[20];
 
 		// game state
-		int statePlayerCoins[2];
-		int stateCardCost[20][2];
-		bool stateCardAfford[20][2];
-		bool stateCardLinked[20][2];
-		short stateCard[20][2]; // 0 = NULL, 1 = facedown, 2 = faceup, 3 = exposed
-		int stateWonderCost[4][2];
-		int stateWonderAfford[4][2];
-		short stateWonder[4][2]; // 0 = unbuilt, 1 = built
+		BoardState bstate;
+		AI ai;
 
 		void Setup();
 		int mCurrentPlayer;
@@ -221,7 +218,7 @@ namespace Seven_Wonders {
 		Card cardTheStatueOfZeus;
 		Card cardTheTempleOfArtemis;
 
-		
+		string strGameLog;
 
 	private:
 

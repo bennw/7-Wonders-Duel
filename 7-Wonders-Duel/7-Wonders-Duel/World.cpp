@@ -5,8 +5,10 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include <time.h>
 #include <cstdlib>
+#include "CardProperties.h"
 using namespace std;
 using namespace Seven_Wonders;
 
@@ -114,7 +116,10 @@ namespace Seven_Wonders {
 		cardTheSphinx(82),
 		cardTheStatueOfZeus(83),
 		cardTheTempleOfArtemis(84)
-	{}
+	{
+		bstate.attachBoard(board);
+		ai.attachBoardState(&bstate);
+	}
 
 	int World::getAge()
 	{
@@ -136,9 +141,18 @@ namespace Seven_Wonders {
 	void World::buildCard(int clickedCardIndex)
 	{
 		Player * opposingPlayer;
-		if (currentPlayer == &player1) opposingPlayer = &player2;
-		else if (currentPlayer == &player2) opposingPlayer = &player1;
-		
+		int p = 0;
+		if (currentPlayer == &player1)
+		{
+			p = 0;
+			opposingPlayer = &player2;
+		}
+		else if (currentPlayer == &player2)
+		{
+			p = 1;
+			opposingPlayer = &player1;
+		}
+
 		if (buildFromDiscard == true)
 		{
 			int pos = 0;
@@ -200,6 +214,8 @@ namespace Seven_Wonders {
 			currentPlayer->playerCity.push_back(board[clickedCardIndex]);
 
 			doEffect(*currentPlayer, *board[clickedCardIndex]);
+
+			setGameLog(p, "Build", board[clickedCardIndex]->getIndex());
 
 			board[clickedCardIndex] = nullptr;
 
@@ -766,29 +782,41 @@ namespace Seven_Wonders {
 		for (int p = 0; p < 2; p++)
 		{
 			Player player = p ? player2 : player1;
-			
-			statePlayerCoins[p] = player.getCoins();
+
+			bstate.attachWonders(p, player.playerWonderDeck);
+			bstate.playerCoins[p] = player.getCoins();
 
 			// cards
 			for (int c = 0; c < 20; ++c)
 			{
 				if (board[c] == nullptr)
 				{
-					stateCard[c][p] = 0;
+					bstate.cardState[c][p] = 0;
 					continue;
 				}
-				stateCardCost[c][p] = -goldCostEx(player, *board[c], isLinked);
-				stateCardAfford[c][p] = stateCardCost[c][p] <= statePlayerCoins[p];
-				stateCardLinked[c][p] = isLinked;
-				stateCard[c][p] = board[c]->getFaceup() ? (board[c]->getExposed() ? 3 : 2) : 1;
+				bstate.cardCost[c][p] = -goldCostEx(player, *board[c], isLinked);
+				bstate.cardAfford[c][p] = bstate.cardCost[c][p] <= bstate.playerCoins[p];
+				bstate.cardLinked[c][p] = isLinked;
+				bstate.cardState[c][p] = board[c]->getFaceup() ? (board[c]->getExposed() ? 3 : 2) : 1;
 			}
 
 			// wonders
 			for (int w = 0; w < 4; ++w)
 			{
-				stateWonderCost[w][p] = -goldCostEx(player, *player.playerWonderDeck[w], isLinked);
-				stateWonderAfford[w][p] = stateWonderCost[w][p] <= statePlayerCoins[p];
+				bstate.wonderCost[w][p] = -goldCostEx(player, *player.playerWonderDeck[w], isLinked);
+				bstate.wonderAfford[w][p] = bstate.wonderCost[w][p] <= bstate.playerCoins[p];
 			}
+
+			// AI (resources)
+			ai.ownedClay[p] = player.getClay() + player.flags.clayTradeFlag;
+			ai.ownedWood[p] = player.getWood() + player.flags.woodTradeFlag;
+			ai.ownedStone[p] = player.getStone() + player.flags.stoneTradeFlag;
+			ai.ownedPaper[p] = player.getPapyrus() + player.flags.papyrusTradeFlag;
+			ai.ownedGlass[p] = player.getGlass() + player.flags.glassTradeFlag;
+			ai.discardGoldValue[p] = player.getDiscardGoldValue();
+
+			// AI
+			ai.updateEV(p);
 		}
 	}
 
@@ -1070,7 +1098,6 @@ namespace Seven_Wonders {
 
 	bool World::checkForNewAge()
 	{
-		
 		int emptyCount = 0;
 		for (int i = 0; i < 20; i++)
 		{
@@ -1109,6 +1136,7 @@ namespace Seven_Wonders {
 				return false;
 			}
 		}
+		return false;
 	}
 
 	bool World::checkForScienceVictory(Player & currentPlayer)
@@ -2537,8 +2565,10 @@ namespace Seven_Wonders {
 
 		int totalCoinsNeeded = woodTradeCost + stoneTradeCost + clayTradeCost + papyrusTradeCost + glassTradeCost;
 		if (totalCoinsNeeded <= 0) return -(card.getCoinCost());
-		if (totalCoinsNeeded > 0) return -(totalCoinsNeeded + card.getCoinCost());
-
+		else //if (totalCoinsNeeded > 0) 
+		{
+			return -(totalCoinsNeeded + card.getCoinCost());
+		}
 	}
 
 	bool World::compareMilitary() //function to determine who has the weaker military to determine whom will pick the turn order
@@ -2607,6 +2637,12 @@ namespace Seven_Wonders {
 		}
 	}
 
+	void World::setGameLog(int p, string strAction, int idxCard)
+	{
+		stringstream ss;
+		ss << "[P" << p + 1 << "] " << strAction << " " << cardName[idxCard];
+		strGameLog = ss.str();
+	}
 }
 
 

@@ -72,6 +72,15 @@
     <ClInclude Include="DiscardedPTPickerState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CardDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -153,6 +162,15 @@
       <Filter>Source Files\7W</Filter>
     </ClCompile>
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\World.cpp">
+      <Filter>Source Files\7W</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\CardProperties.cpp">
       <Filter>Source Files\7W</Filter>
     </ClCompile>
   </ItemGroup>

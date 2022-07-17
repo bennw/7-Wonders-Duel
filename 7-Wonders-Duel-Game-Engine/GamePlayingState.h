@@ -64,6 +64,11 @@ public:
 	sf::Text txtCostIndicatorWonderP1[4];
 	sf::Text txtCostIndicatorWonderP2[4];
 
+	sf::Text txtGameLog;
+	// AI
+	sf::Text txtEVIndicatorP1[20];
+	sf::Text txtEVIndicatorP2[20];
+
 	// Sprite
 	sf::Sprite mConflictPawn;
 	sf::Sprite mCard1;

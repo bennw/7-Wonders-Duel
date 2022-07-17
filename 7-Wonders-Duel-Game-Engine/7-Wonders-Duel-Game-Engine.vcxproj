@@ -156,6 +156,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
+    <ClInclude Include="BoardState.h" />
+    <ClInclude Include="CardDefine.h" />
     <ClInclude Include="CardDestroyerState.h" />
     <ClInclude Include="CardPickerState.h" />
     <ClInclude Include="DiscardedCardPickerState.h" />
@@ -177,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Card.cpp" />
+    <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\CardProperties.cpp" />
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ConflictPawn_DEP.cpp" />
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Effects_DEP.cpp" />
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Initialization_DEP.cpp" />
@@ -185,6 +189,8 @@
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\ProgressToken.cpp" />
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\Test.cpp" />
     <ClCompile Include="..\7-Wonders-Duel\7-Wonders-Duel\World.cpp" />
+    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="BoardState.cpp" />
     <ClCompile Include="CardDestroyerState.cpp" />
     <ClCompile Include="CardPickerState.cpp" />
     <ClCompile Include="DiscardedCardPickerState.cpp" />

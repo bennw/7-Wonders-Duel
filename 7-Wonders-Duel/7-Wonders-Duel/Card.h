@@ -55,7 +55,6 @@ namespace Seven_Wonders {
 		void setLinkerValue1(int cardIndexNumber);
 		int getLinkerValue1();
 		void setLinkerValue2(int cardIndexNumber);
-
 		int getLinkerValue2();
 
 

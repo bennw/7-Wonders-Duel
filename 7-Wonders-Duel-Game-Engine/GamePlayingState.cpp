@@ -17,6 +17,9 @@ void GamePlayingState::draw(const float dt)
 	sf::FloatRect rect1, rect2;
 	p_game->window.draw(background);
 
+	txtGameLog.setString(p_game->world.strGameLog);
+	p_game->window.draw(txtGameLog);
+
 	for (int i = 0; i < 20; ++i)
 	{
 		if (p_game->world.board[i] != nullptr)
@@ -29,10 +32,10 @@ void GamePlayingState::draw(const float dt)
 
 			if (p_game->world.board[i]->getFaceup() == true)
 			{
-				txtCostIndicatorP1[i].setString(to_string(p_game->world.stateCardCost[i][0]));
-				txtCostIndicatorP2[i].setString(to_string(p_game->world.stateCardCost[i][1]));
-				txtCostIndicatorP1[i].setFillColor(p_game->world.stateCardAfford[i][0] ? (p_game->world.stateCardLinked[i][0] ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
-				txtCostIndicatorP2[i].setFillColor(p_game->world.stateCardAfford[i][1] ? (p_game->world.stateCardLinked[i][1] ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
+				txtCostIndicatorP1[i].setString(to_string(p_game->world.bstate.cardCost[i][0]));
+				txtCostIndicatorP2[i].setString(to_string(p_game->world.bstate.cardCost[i][1]));
+				txtCostIndicatorP1[i].setFillColor(p_game->world.bstate.cardAfford[i][0] ? (p_game->world.bstate.cardLinked[i][0] ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
+				txtCostIndicatorP2[i].setFillColor(p_game->world.bstate.cardAfford[i][1] ? (p_game->world.bstate.cardLinked[i][1] ? sf::Color::Cyan : sf::Color::White) : SF_COLOR_DARKRED);
 				rect1 = txtCostIndicatorP1[i].getLocalBounds();
 				rect2 = txtCostIndicatorP2[i].getLocalBounds();
 				txtCostIndicatorP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
@@ -41,6 +44,15 @@ void GamePlayingState::draw(const float dt)
 				p_game->window.draw(spCostIndicatorP2[i]);
 				p_game->window.draw(txtCostIndicatorP1[i]);
 				p_game->window.draw(txtCostIndicatorP2[i]);
+
+				txtEVIndicatorP1[i].setString(to_string(p_game->world.bstate.cardEV[i][0]));
+				txtEVIndicatorP2[i].setString(to_string(p_game->world.bstate.cardEV[i][1]));
+				rect1 = txtEVIndicatorP1[i].getLocalBounds();
+				rect2 = txtEVIndicatorP2[i].getLocalBounds();
+				txtEVIndicatorP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
+				txtEVIndicatorP2[i].setOrigin(rect2.left + rect2.width / 2.0f, rect2.top + rect2.height / 2.0f);
+				p_game->window.draw(txtEVIndicatorP1[i]);
+				p_game->window.draw(txtEVIndicatorP2[i]);
 			}
 		}
 	}
@@ -54,8 +66,8 @@ void GamePlayingState::draw(const float dt)
 		}
 		else if (p_game->world.player1.playerWonderDeck[i]->builtWonder == false && p_game->world.wonderCount < 7)
 		{
-			txtCostIndicatorWonderP1[i].setString(to_string(p_game->world.stateWonderCost[i][0]));
-			txtCostIndicatorWonderP1[i].setColor(p_game->world.stateWonderAfford[i][0] ? sf::Color::White : SF_COLOR_DARKRED);
+			txtCostIndicatorWonderP1[i].setString(to_string(p_game->world.bstate.wonderCost[i][0]));
+			txtCostIndicatorWonderP1[i].setColor(p_game->world.bstate.wonderAfford[i][0] ? sf::Color::White : SF_COLOR_DARKRED);
 			rect1 = txtCostIndicatorWonderP1[i].getLocalBounds();
 			txtCostIndicatorWonderP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
 			p_game->window.draw(spCostIndicatorWonderP1[i]);
@@ -67,8 +79,8 @@ void GamePlayingState::draw(const float dt)
 		}
 		else if (p_game->world.player2.playerWonderDeck[i]->builtWonder == false && p_game->world.wonderCount < 7)
 		{
-			txtCostIndicatorWonderP2[i].setString(to_string(p_game->world.stateWonderCost[i][1]));
-			txtCostIndicatorWonderP2[i].setColor(p_game->world.stateWonderAfford[i][1] ? sf::Color::White : SF_COLOR_DARKRED);
+			txtCostIndicatorWonderP2[i].setString(to_string(p_game->world.bstate.wonderCost[i][1]));
+			txtCostIndicatorWonderP2[i].setColor(p_game->world.bstate.wonderAfford[i][1] ? sf::Color::White : SF_COLOR_DARKRED);
 			rect2 = txtCostIndicatorWonderP2[i].getLocalBounds();
 			txtCostIndicatorWonderP2[i].setOrigin(rect2.left + rect2.width / 2.0f, rect2.top + rect2.height / 2.0f);
 			p_game->window.draw(spCostIndicatorWonderP2[i]);
@@ -628,6 +640,7 @@ GamePlayingState::GamePlayingState(Game * game)
 	int x1coin = 38, y1coin = 90, x2coin = 38, y2coin = 145;
 	int x1ctxt = x1coin + DRAW_TXT_COIN_OFFSET_X, y1ctxt = y1coin + DRAW_TXT_COIN_OFFSET_Y,
 		x2ctxt = x2coin + DRAW_TXT_COIN_OFFSET_X, y2ctxt = y2coin + DRAW_TXT_COIN_OFFSET_Y;
+	int x1ev = x1ctxt, y1ev = y1ctxt -20, x2ev = x2ctxt, y2ev = y2ctxt -20;
 
 	p_game = game;
 	emptyCount = 0;
@@ -642,6 +655,11 @@ GamePlayingState::GamePlayingState(Game * game)
 	scienceVictorySound.setBuffer(p_game->soundManager.soundMap.at("Science Victory"));
 	militaryVictorySound.setBuffer(p_game->soundManager.soundMap.at("Military Victory"));
 	civilianVictorySound.setBuffer(p_game->soundManager.soundMap.at("Civilian Victory"));
+
+	txtGameLog.setColor(sf::Color::White);
+	txtGameLog.setFont(p_game->fontManager.getRef("Menu Font"));
+	txtGameLog.setCharacterSize(28);
+	txtGameLog.setPosition(250.0f, 90.0f);
 
 	for (int i = 0; i < 20; ++i)
 	{
@@ -664,6 +682,8 @@ GamePlayingState::GamePlayingState(Game * game)
 			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
 			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
 			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
+			txtEVIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ev, p_game->world.board[i]->getPosition()[1] + y1ev);
+			txtEVIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ev, p_game->world.board[i]->getPosition()[1] + y2ev);
 		}
 
 		if (p_game->world.getAge() == 2)
@@ -686,6 +706,8 @@ GamePlayingState::GamePlayingState(Game * game)
 			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
 			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
 			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
+			txtEVIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ev, p_game->world.board[i]->getPosition()[1] + y1ev);
+			txtEVIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ev, p_game->world.board[i]->getPosition()[1] + y2ev);
 				
 		}
 		if (p_game->world.getAge() == 3)
@@ -713,6 +735,8 @@ GamePlayingState::GamePlayingState(Game * game)
 			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
 			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
 			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
+			txtEVIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ev, p_game->world.board[i]->getPosition()[1] + y1ev);
+			txtEVIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ev, p_game->world.board[i]->getPosition()[1] + y2ev);
 		}
 
 	}
@@ -886,6 +910,12 @@ GamePlayingState::GamePlayingState(Game * game)
 		spCostIndicatorP2[i].setOrigin(spCostIndicatorP2[i].getGlobalBounds().width / 2, spCostIndicatorP2[i].getGlobalBounds().height / 2);
 		spCostIndicatorP1[i].setTexture(p_game->textureManager.getRef("Coin"));
 		spCostIndicatorP2[i].setTexture(p_game->textureManager.getRef("Coin"));
+		txtEVIndicatorP1[i].setFont(game->fontManager.getRef("Menu Font"));
+		txtEVIndicatorP1[i].setCharacterSize(20);
+		txtEVIndicatorP1[i].setColor(sf::Color::Green);
+		txtEVIndicatorP2[i].setFont(game->fontManager.getRef("Menu Font"));
+		txtEVIndicatorP2[i].setCharacterSize(20);
+		txtEVIndicatorP2[i].setColor(sf::Color::Green);
 	}
 
 		
@@ -1314,6 +1344,7 @@ bool GamePlayingState::checkForPlayAgain()
 		p_game->world.ExitGame();
 		return true;
 	}
+	return false;
 }
 
 void GamePlayingState::checkForNewAge()
