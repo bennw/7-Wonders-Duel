@@ -1090,6 +1090,8 @@ GamePlayingState::GamePlayingState(Game * game)
 
 	rectPlayer1City = player1City.getGlobalBounds();
 	rectPlayer2City = player2City.getGlobalBounds();
+
+	p_game->world.executeAI();
 }
 
 void GamePlayingState::resetSprites()

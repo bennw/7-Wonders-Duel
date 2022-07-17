@@ -227,6 +227,8 @@ namespace Seven_Wonders {
 		{
 			if (currentPlayer == &player1) currentPlayer = &player2;
 			else if (currentPlayer == &player2) currentPlayer = &player1;
+
+			executeAI();
 		}
 	}
 
@@ -356,6 +358,7 @@ namespace Seven_Wonders {
 
 		if (currentPlayer == &player1) currentPlayer = &player2;
 		else if (currentPlayer == &player2) currentPlayer = &player1;
+		executeAI();
 	}
 
 	/* Run when a player picks the discard card option
@@ -378,11 +381,14 @@ namespace Seven_Wonders {
 
 		if (currentPlayer == &player1) currentPlayer = &player2;
 		else if (currentPlayer == &player2) currentPlayer = &player1;
+		executeAI();
 
 	}
 
 	void World::buildWonder(int wonderNumber, int clickedCardIndex)
 	{
+		bool bNextTurn = false;
+
 		currentPlayer->playerWonderDeck[wonderNumber - 1]->builtWonder = true;
 
 		Player * opposingPlayer;
@@ -414,6 +420,7 @@ namespace Seven_Wonders {
 		currentPlayer->playerWonderDeck[wonderNumber - 1]->builtInAge = getAge();
 
 		doEffect(*currentPlayer, *currentPlayer->playerWonderDeck[wonderNumber - 1]);
+		wonderCount++;
 
 		// Coin changes for building player
 		currentPlayer->setCoins(goldCost(*currentPlayer, *currentPlayer->playerWonderDeck[wonderNumber - 1]));
@@ -447,15 +454,19 @@ namespace Seven_Wonders {
 		updateGameState();
 		if (buildFromDiscard == false && buildPTFromDiscard == false)
 		{
-			if (currentPlayer == &player1 && repeatTurn == false) currentPlayer = &player2;
-			else if (currentPlayer == &player2 && repeatTurn == false) currentPlayer = &player1;
+			if (currentPlayer == &player1 && repeatTurn == false) {
+				currentPlayer = &player2; bNextTurn = true;
+			}
+			else if (currentPlayer == &player2 && repeatTurn == false) {
+				currentPlayer = &player1; bNextTurn = false;
+			}
 			else if (repeatTurn == true) {} //  this won't change the currentplayer pointer so whoever built the card that flagged repeatTurn should get another turn
 		}
 		else if (buildFromDiscard == true || buildPTFromDiscard == true) {} // the player turn will be switched in another function
 
 		if (repeatTurn == true) repeatTurn = false; // re-setting the repeatturn flag
 
-		wonderCount++;
+		if (bNextTurn) executeAI();
 	}
 
 	void World::destroyCard(int cardIndex, Player & targetplayer)
@@ -817,6 +828,29 @@ namespace Seven_Wonders {
 
 			// AI
 			ai.updateEV(p);
+		}
+	}
+
+	void World::executeAI()
+	{
+		int idxBoardSelected = -1;
+		int EVSelected = -100;
+
+		// execute Player 1's turn using AI
+		if (currentPlayer == &player2) return;
+
+		for (int i = 0; i < 20; ++i)
+		{
+			if (bstate.board[i] != nullptr && bstate.cardState[i][0] == 3 && bstate.cardEV[i][0] > EVSelected)
+			{
+				EVSelected = bstate.cardEV[i][0];
+				idxBoardSelected = i;
+			}
+		}
+
+		if (idxBoardSelected >= 0)
+		{
+			buildCard(idxBoardSelected);
 		}
 	}
 

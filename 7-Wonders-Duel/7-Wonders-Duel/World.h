@@ -32,6 +32,7 @@ namespace Seven_Wonders {
 		void destroyCard(int cardIndex, Player & player);
 		void exposeCards();
 		void updateGameState();
+		void executeAI();
 		void setGameLog(int p, string strLog, int idxCard);
 
 		vector<Card> age1Deck;
