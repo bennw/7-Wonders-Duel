@@ -24,6 +24,7 @@ void AI::attachBoardState(BoardState* bs)
 void AI::updateEV(int p)
 {
 	int EV = 0;
+	int conflict;
 	ResourceType resource;
 
 	updateRequiredOwnedResources(p);
@@ -132,6 +133,16 @@ silver_card_ev:
 		case IdxWorkshop:
 		case IdxApothecary:
 			EV = 90;
+			break;
+		case IdxGuardTower:
+		case IdxStable:
+		case IdxGarrison:
+		case IdxPalisade:
+			EV = 0;
+			conflict = bstate->conflict;
+			if (p == 1) conflict *= -1;
+			if (conflict <= -2) EV = 71;
+			if (bstate->cardCost[c][p] > 0) EV -= 10 * bstate->cardCost[c][p];
 			break;
 		default:
 			EV = 0;

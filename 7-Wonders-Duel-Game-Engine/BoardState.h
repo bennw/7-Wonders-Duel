@@ -27,6 +27,7 @@ namespace Seven_Wonders {
 		int wonderCost[4][2] = { 0 };
 		int wonderAfford[4][2] = { 0 };
 		short wonderBuilt[4][2] = { 0 }; // 0 = unbuilt, 1 = built
+		int conflict; // negative = P2 winning, positive = P1 winning
 	private:
 	};
 

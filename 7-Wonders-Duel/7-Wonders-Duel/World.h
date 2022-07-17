@@ -113,7 +113,7 @@ namespace Seven_Wonders {
 
 
 		int mAge = 1;
-		int mConflict = 0;
+		int mConflict = 0; // negative = P2 winning, positive = P1 winning
 
 		// All game objects
 		Player * currentPlayer = nullptr;

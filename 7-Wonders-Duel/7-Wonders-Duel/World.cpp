@@ -790,6 +790,9 @@ namespace Seven_Wonders {
 	void World::updateGameState()
 	{
 		bool isLinked;
+
+		bstate.conflict = mConflict;
+
 		for (int p = 0; p < 2; p++)
 		{
 			Player player = p ? player2 : player1;
@@ -841,7 +844,7 @@ namespace Seven_Wonders {
 
 		for (int i = 0; i < 20; ++i)
 		{
-			if (bstate.board[i] != nullptr && bstate.cardState[i][0] == 3 && bstate.cardEV[i][0] > EVSelected)
+			if (bstate.board[i] != nullptr && bstate.cardAfford[i][0] && bstate.cardState[i][0] == 3 && bstate.cardEV[i][0] > EVSelected)
 			{
 				EVSelected = bstate.cardEV[i][0];
 				idxBoardSelected = i;
