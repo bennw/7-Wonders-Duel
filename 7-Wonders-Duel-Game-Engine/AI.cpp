@@ -141,8 +141,13 @@ silver_card_ev:
 			EV = 0;
 			conflict = bstate->conflict;
 			if (p == 1) conflict *= -1;
-			if (conflict <= -2) EV = 71;
-			if (bstate->cardCost[c][p] > 0) EV -= 10 * bstate->cardCost[c][p];
+			if (conflict <= -2 && bstate->cardCost[c][p] == 0 && bstate->playerCoins[p] > 2) EV = 59;
+			break;
+		case IdxTheater:
+		case IdxAltar:
+		case IdxBaths:
+			EV = 0;
+			if (/* TODO no law &&*/ bstate->cardCost[c][p] == 0 && bstate->playerCoins[p] > 2) EV = 57;
 			break;
 		default:
 			EV = 0;
@@ -151,6 +156,19 @@ silver_card_ev:
 		bstate->cardEV[c][p] = EV;
 	}
 
+	updateDiscardEV(p);
+}
+
+void AI::updateDiscardEV(int p)
+{
+	if (bstate->playerCoins[p] > 2)
+	{
+		bstate->discardEV[p] = 30;
+	}
+	else
+	{
+		bstate->discardEV[p] = 50 - 10 * bstate->playerCoins[p];
+	}
 }
 
 void AI::updateRequiredOwnedResources(int p)

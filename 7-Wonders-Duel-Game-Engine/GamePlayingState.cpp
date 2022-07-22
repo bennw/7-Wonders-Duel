@@ -17,8 +17,10 @@ void GamePlayingState::draw(const float dt)
 	sf::FloatRect rect1, rect2;
 	p_game->window.draw(background);
 
-	txtGameLog.setString(p_game->world.strGameLog);
-	p_game->window.draw(txtGameLog);
+	txtGameLog1.setString(p_game->world.strGameLog1);
+	txtGameLog2.setString(p_game->world.strGameLog2);
+	p_game->window.draw(txtGameLog1);
+	p_game->window.draw(txtGameLog2);
 
 	for (int i = 0; i < 20; ++i)
 	{
@@ -656,10 +658,14 @@ GamePlayingState::GamePlayingState(Game * game)
 	militaryVictorySound.setBuffer(p_game->soundManager.soundMap.at("Military Victory"));
 	civilianVictorySound.setBuffer(p_game->soundManager.soundMap.at("Civilian Victory"));
 
-	txtGameLog.setColor(sf::Color::White);
-	txtGameLog.setFont(p_game->fontManager.getRef("Menu Font"));
-	txtGameLog.setCharacterSize(28);
-	txtGameLog.setPosition(250.0f, 90.0f);
+	txtGameLog1.setColor(sf::Color::White);
+	txtGameLog1.setFont(p_game->fontManager.getRef("Menu Font"));
+	txtGameLog1.setCharacterSize(28);
+	txtGameLog1.setPosition(250.0f, 120.0f);
+	txtGameLog2.setColor(sf::Color::White);
+	txtGameLog2.setFont(p_game->fontManager.getRef("Menu Font"));
+	txtGameLog2.setCharacterSize(28);
+	txtGameLog2.setPosition(250.0f, 90.0f);
 
 	for (int i = 0; i < 20; ++i)
 	{

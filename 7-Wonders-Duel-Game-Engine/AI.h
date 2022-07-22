@@ -9,6 +9,7 @@ public:
 
 	void attachBoardState(BoardState* bs);
 	void updateEV(int p); // p: player1/2 = 0/1
+	void updateDiscardEV(int p);
 	void updateRequiredOwnedResources(int p);
 
 	// internal state variables, used in AI computation
@@ -25,6 +26,8 @@ public:
 	bool wonderHasBasic[2] = { 0 };
 	bool wonderHasAdv[2] = { 0 };
 	int discardGoldValue[2] = { 2 };
+	bool hasAllBasic = false;
+	bool hasAllAdv = false;
 
 private:
 	BoardState* bstate;

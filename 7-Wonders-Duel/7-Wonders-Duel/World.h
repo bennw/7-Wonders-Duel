@@ -31,9 +31,11 @@ namespace Seven_Wonders {
 		void buildWonder(int wonderNumber, int clickCardIndex);
 		void destroyCard(int cardIndex, Player & player);
 		void exposeCards();
+		int getNumBlocked(int i);
+		int getTriggerExpose(int i, int &l, int &r);
 		void updateGameState();
 		void executeAI();
-		void setGameLog(int p, string strLog, int idxCard);
+		void setGameLog(int p, string strLog, int idxCard, int coinsDelta);
 
 		vector<Card> age1Deck;
 		vector<Card*> wonderCardDeck;
@@ -219,7 +221,8 @@ namespace Seven_Wonders {
 		Card cardTheStatueOfZeus;
 		Card cardTheTempleOfArtemis;
 
-		string strGameLog;
+		string strGameLog1;
+		string strGameLog2;
 
 	private:
 

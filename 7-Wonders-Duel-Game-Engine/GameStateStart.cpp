@@ -108,7 +108,7 @@ GameStateStart::GameStateStart(Game * game)
 	background.setTexture(p_game->textureManager.getRef("GameStateStart Background"));
 
 	//load sound
-	gameStartSound.setBuffer(p_game->soundManager.soundMap.at("Game Start"));
+	//gameStartSound.setBuffer(p_game->soundManager.soundMap.at("Game Start"));
 
 	// Title Card at top
 	title.setTexture(p_game->textureManager.getRef("GameStateStart Title"));
@@ -135,7 +135,7 @@ GameStateStart::GameStateStart(Game * game)
 	//exitGameText.setPosition(800 - 0.5 * exitGameText.getGlobalBounds().width, 500);
 
 	menuMusic.openFromFile("Resources/Sounds/menumusic.ogg");
-	menuMusic.play();
+	//menuMusic.play();
 	
 }
 

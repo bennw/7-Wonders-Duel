@@ -64,7 +64,8 @@ public:
 	sf::Text txtCostIndicatorWonderP1[4];
 	sf::Text txtCostIndicatorWonderP2[4];
 
-	sf::Text txtGameLog;
+	sf::Text txtGameLog1;
+	sf::Text txtGameLog2;
 	// AI
 	sf::Text txtEVIndicatorP1[20];
 	sf::Text txtEVIndicatorP2[20];
