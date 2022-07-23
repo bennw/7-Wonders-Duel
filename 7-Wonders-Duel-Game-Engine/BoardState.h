@@ -23,6 +23,7 @@ namespace Seven_Wonders {
 		bool cardAfford[20][2] = { 0 };
 		bool cardLinked[20][2] = { 0 };
 		int cardEV[20][2] = { 0 }; // AI, max 100
+		int cardDiscardEV[20][2] = { 0 }; // AI, 0-100 range, -1 is invalid. Higher = better to discard
 		short cardState[20] = { 0 }; // 0 = NULL, 1 = facedown, 2 = faceup, 3 = exposed
 		int cardNumBlocked[20] = { 0 }; // number of cards directly blocking it, possible defined values = 0-2
 		int wonderCost[4][2] = { 0 };

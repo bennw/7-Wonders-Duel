@@ -140,7 +140,7 @@ namespace Seven_Wonders {
 	   is switched to the opposing player. */
 	void World::buildCard(int clickedCardIndex)
 	{
-		Player * opposingPlayer;
+		Player * opposingPlayer = NULL;
 		int p = 0;
 		int coinsDelta = 0;
 		if (currentPlayer == &player1)
@@ -780,8 +780,10 @@ namespace Seven_Wonders {
 				int* ptr = ((int*)&player.scienceSymbols.arch) + s;
 				bstate.sciOwned[s][p] = *ptr;
 				if (s < 6 && bstate.sciOwned[s][0] + bstate.sciOwned[s][1] + bstate.sciDiscarded[s] >= 2) {
-					if (player1.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0 == false) bstate.sciUnavailable[s][0] = true;
-					if (player2.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0 == false) bstate.sciUnavailable[s][1] = true;
+					bstate.sciUnavailable[s][0] = true;
+					bstate.sciUnavailable[s][1] = true;
+					if (player1.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0) bstate.sciUnavailable[s][0] = false;
+					if (player2.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0) bstate.sciUnavailable[s][1] = false;
 				}
 				else if (s == 6)
 				{
@@ -808,20 +810,31 @@ namespace Seven_Wonders {
 			ai.ownedStone[p] = player.getStone() + player.flags.stoneTradeFlag;
 			ai.ownedPaper[p] = player.getPapyrus() + player.flags.papyrusTradeFlag;
 			ai.ownedGlass[p] = player.getGlass() + player.flags.glassTradeFlag;
-			ai.hasAllBasic = ((ai.ownedClay[p] ? 1 : 0) +
+			ai.ownedWildBasic[p] = (player.flags.caravenseryResourcesFlag ? 1 : 0) + (player.flags.theGreatLighthouseResourcesFlag ? 1 : 0);
+			ai.ownedWildAdv[p] = (player.flags.forumResourcesFlag ? 1 : 0) + (player.flags.piraeusResourcesFlag ? 1 : 0);
+			ai.hasAllBasic[p] = ((ai.ownedClay[p] ? 1 : 0) +
 				(ai.ownedWood[p] ? 1 : 0) +
 				(ai.ownedStone[p] ? 1 : 0) +
 				(player.flags.caravenseryResourcesFlag ? 1 : 0) +
 				(player.flags.theGreatLighthouseResourcesFlag ? 1 : 0)) >= 3 ? true : false;
-			ai.hasAllAdv = ((ai.ownedPaper[p] ? 1 : 0) +
+			ai.hasAllAdv[p] = ((ai.ownedPaper[p] ? 1 : 0) +
 				(ai.ownedGlass[p] ? 1 : 0) +
 				(player.flags.forumResourcesFlag ? 1 : 0) +
 				(player.flags.piraeusResourcesFlag ? 1 : 0)) >= 2 ? true : false;
 			ai.discardGoldValue[p] = player.getDiscardGoldValue();
 
-			// AI
-			ai.updateEV(p);
+			// AI (board)
+			for (int c = 0; c < 20; ++c)
+			{
+				int l, r;
+				getTriggerExpose(c, l, r);
+				ai.cardTriggerExpose[c][0] = l;
+				ai.cardTriggerExpose[c][1] = r;
+			}
 		}
+
+		// AI
+		ai.updateEV();
 	}
 
 	void World::executeAI()
@@ -832,7 +845,7 @@ namespace Seven_Wonders {
 		vector<int> exposedCards;
 		vector<int> discardCandidates;
 		int l, r;
-		int opponentEV1st = -100, opponentEV2nd = -100, lowestMaxOpponentEVAfterDiscard = 101, maxOpponentEVAfterDiscard, idxDiscardSelected;
+		int opponentEV1st = -100, opponentEV2nd = -100, discardEVSelected = -1, idxDiscardSelected;
 
 		// execute Player 1's turn using AI
 		if (currentPlayer == &player2) return;
@@ -857,41 +870,12 @@ namespace Seven_Wonders {
 		{
 			for (int idx : exposedCards)
 			{
-				if (bstate.cardEV[idx][1] > opponentEV1st)
+				if (bstate.cardDiscardEV[idx][0] > discardEVSelected)
 				{
-					opponentEV2nd = opponentEV1st;
-					opponentEV1st = bstate.cardEV[idx][1];
-				}
-				else if (bstate.cardEV[idx][1] > opponentEV2nd)
-				{
-					opponentEV2nd = bstate.cardEV[idx][1];
-				}
-			}
-			for (int idx : exposedCards)
-			{
-				getTriggerExpose(idx, l, r);
-				// max opponent EV of all exposed cards sans card idx
-				maxOpponentEVAfterDiscard = opponentEV1st;
-				if (bstate.cardEV[idx][1] == opponentEV1st) maxOpponentEVAfterDiscard = opponentEV2nd;
-				// now factor in cards newly exposed if card idx is discarded; facedowns have an opponent EV of 100
-				if (l != -1)
-				{
-					if (bstate.cardState[l] == 1) maxOpponentEVAfterDiscard = 100;
-					else maxOpponentEVAfterDiscard = max(bstate.cardEV[l][0], maxOpponentEVAfterDiscard);
-				}
-				if (r != -1)
-				{
-					if (bstate.cardState[r] == 1) maxOpponentEVAfterDiscard = 100;
-					else maxOpponentEVAfterDiscard = max(bstate.cardEV[r][0], maxOpponentEVAfterDiscard);
-				}
-				if (maxOpponentEVAfterDiscard < lowestMaxOpponentEVAfterDiscard)
-				{
-					lowestMaxOpponentEVAfterDiscard = maxOpponentEVAfterDiscard;
+					discardEVSelected = bstate.cardDiscardEV[idx][0];
 					idxDiscardSelected = idx;
 				}
 			}
-
-			// TODO execute discard
 			discardCard(idxDiscardSelected);
 		}
 		else if (idxBoardSelected >= 0)
@@ -1221,7 +1205,6 @@ namespace Seven_Wonders {
 
 	bool World::checkForScienceVictory(Player & currentPlayer)
 	{
-	
 		int symbolCounter = 0;
 		if (currentPlayer.scienceSymbols.arch >= 1) symbolCounter++;
 		if (currentPlayer.scienceSymbols.balance >= 1) symbolCounter++;
@@ -1999,8 +1982,6 @@ namespace Seven_Wonders {
 				{
 					mConflict++;
 				}*/
-
-				
 				mConflict += (card.getShields() + ((currentPlayer.flags.strategyPTFlag) ? (1) : (0)));
 			}
 			else if (currentPlayer.getPlayerNumber() == PLAYER_2)

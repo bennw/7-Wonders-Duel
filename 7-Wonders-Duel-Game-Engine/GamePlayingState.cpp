@@ -47,8 +47,14 @@ void GamePlayingState::draw(const float dt)
 				p_game->window.draw(txtCostIndicatorP1[i]);
 				p_game->window.draw(txtCostIndicatorP2[i]);
 
-				txtEVIndicatorP1[i].setString(to_string(p_game->world.bstate.cardEV[i][0]));
-				txtEVIndicatorP2[i].setString(to_string(p_game->world.bstate.cardEV[i][1]));
+				if (p_game->world.bstate.cardDiscardEV[i][0] == -1)
+					txtEVIndicatorP1[i].setString(to_string(p_game->world.bstate.cardEV[i][0]));
+				else
+					txtEVIndicatorP1[i].setString(to_string(p_game->world.bstate.cardEV[i][0]) + " / " + to_string(p_game->world.bstate.cardDiscardEV[i][0]));
+				if (p_game->world.bstate.cardDiscardEV[i][1] == -1)
+					txtEVIndicatorP2[i].setString(to_string(p_game->world.bstate.cardEV[i][1]));
+				else
+					txtEVIndicatorP2[i].setString(to_string(p_game->world.bstate.cardEV[i][1]) + " / " + to_string(p_game->world.bstate.cardDiscardEV[i][1]));
 				rect1 = txtEVIndicatorP1[i].getLocalBounds();
 				rect2 = txtEVIndicatorP2[i].getLocalBounds();
 				txtEVIndicatorP1[i].setOrigin(rect1.left + rect1.width / 2.0f, rect1.top + rect1.height / 2.0f);
