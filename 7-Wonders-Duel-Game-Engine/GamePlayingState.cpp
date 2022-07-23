@@ -321,6 +321,14 @@ void GamePlayingState::drawResourceIcons(const float dt)
 		p_game->window.draw(spWildAdvP2[i]);
 	}
 
+	for (int i = 0; i < 5; ++i)
+	{
+		bool* ptr1 = ((bool*)&p_game->world.player1.flags.woodTradeFlag) + i;
+		bool* ptr2 = ((bool*)&p_game->world.player2.flags.woodTradeFlag) + i;
+		if (*ptr1) p_game->window.draw(spDiscountP1[i]);
+		if (*ptr2) p_game->window.draw(spDiscountP2[i]);
+	}
+
 	for (int i = 0; i < 7; ++i)
 	{
 		int* ptr1 = ((int*) & (p_game->world.player1.scienceSymbols.arch)) + i;
@@ -963,9 +971,15 @@ GamePlayingState::GamePlayingState(Game * game)
 		spSciP1[i].setPosition(530.0f + 40.0f * i, 30.0f);
 		spSciP2[i].setPosition(530.0f + 40.0f * i, 856.0f);
 	}
-
-		
-
+	for (int i = 0; i < 5; ++i)
+	{
+		spDiscountP1[i].setTexture(p_game->textureManager.getRef("Coin One"));
+		spDiscountP2[i].setTexture(p_game->textureManager.getRef("Coin One"));
+		spDiscountP1[i].setOrigin(spDiscountP1[i].getGlobalBounds().width / 2, spDiscountP1[i].getGlobalBounds().height / 2);
+		spDiscountP2[i].setOrigin(spDiscountP2[i].getGlobalBounds().width / 2, spDiscountP2[i].getGlobalBounds().height / 2);
+		spDiscountP1[i].setPosition(135.0f + 60.0f * i + (i>=3?60.0f:0), 15.0f);
+		spDiscountP2[i].setPosition(135.0f + 60.0f * i + (i >= 3 ? 60.0f : 0), 885.0f);
+	}
 
 	player1Turn.setFont(game->fontManager.getRef("Menu Font"));
 	player1Turn.setString("Player 1's Turn");

@@ -64,8 +64,8 @@ namespace Seven_Wonders {
 		struct flags
 		{
 			bool woodTradeFlag = false;
-			bool stoneTradeFlag = false;
 			bool clayTradeFlag = false;
+			bool stoneTradeFlag = false;
 			bool papyrusTradeFlag = false;
 			bool glassTradeFlag = false;
 			bool architecturePTFlag = false;

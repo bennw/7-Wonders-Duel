@@ -211,6 +211,7 @@ void Game::loadTextures()
 	textureManager.loadTexture("Wild Adv", "Resources/Icons/wildadv.png");
 	textureManager.loadTexture("Coin", "Resources/Icons/coin.png");
 	textureManager.loadTexture("Coin Big", "Resources/Icons/coinbig.png");
+	textureManager.loadTexture("Coin One", "Resources/Icons/coinone.png");
 
 	textureManager.loadTexture("Sci Arch", "Resources/Icons/sciarch.png");
 	textureManager.loadTexture("Sci Mortar", "Resources/Icons/scimortar.png");

@@ -144,6 +144,8 @@ public:
 	sf::Sprite spGlassP2[MAX_RESOURCE_ADV];
 	sf::Sprite spWildBasicP2[MAX_RESOURCE_BASIC_WILD];
 	sf::Sprite spWildAdvP2[MAX_RESOURCE_ADV_WILD];
+	sf::Sprite spDiscountP1[5];
+	sf::Sprite spDiscountP2[5];
 	sf::Sprite spSciP1[7];
 	sf::Sprite spSciP2[7];
 
