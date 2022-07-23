@@ -1520,19 +1520,19 @@ namespace Seven_Wonders {
 		int glassTradeCost = 0;
 
 		if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == false) woodTradeCost += (2 + opposingPlayer->getWood()) * woodCardDiff;
-		else if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == true) woodTradeCost += (1 + opposingPlayer->getWood()) * woodCardDiff;
+		else if (woodCardDiff > 0 && currentPlayer.flags.woodTradeFlag == true) woodTradeCost += 1 * woodCardDiff;
 
 		if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == false) stoneTradeCost += (2 + opposingPlayer->getStone()) * stoneCardDiff;
-		else if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == true) stoneTradeCost += (1 + opposingPlayer->getStone()) * stoneCardDiff;
+		else if (stoneCardDiff > 0 && currentPlayer.flags.stoneTradeFlag == true) stoneTradeCost += 1 * stoneCardDiff;
 
 		if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == false) clayTradeCost += (2 + opposingPlayer->getClay()) * clayCardDiff;
-		else if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == true) clayTradeCost += (1 + opposingPlayer->getClay()) * clayCardDiff;
+		else if (clayCardDiff > 0 && currentPlayer.flags.clayTradeFlag == true) clayTradeCost += 1 * clayCardDiff;
 
 		if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == false) papyrusTradeCost += (2 + opposingPlayer->getPapyrus()) * papyrusCardDiff;
-		else if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == true) papyrusTradeCost += (1 + opposingPlayer->getPapyrus()) * papyrusCardDiff;
+		else if (papyrusCardDiff > 0 && currentPlayer.flags.papyrusTradeFlag == true) papyrusTradeCost += 1 * papyrusCardDiff;
 
 		if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == false) glassTradeCost += (2 + opposingPlayer->getGlass()) * glassCardDiff;
-		else if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == true) glassTradeCost += (1 + opposingPlayer->getGlass()) * glassCardDiff;
+		else if (glassCardDiff > 0 && currentPlayer.flags.glassTradeFlag == true) glassTradeCost += 1 * glassCardDiff;
 
 		int totalCoinsNeeded = woodTradeCost + stoneTradeCost + clayTradeCost + papyrusTradeCost + glassTradeCost;
 
@@ -1975,7 +1975,7 @@ namespace Seven_Wonders {
 		{
 			if (currentPlayer.getPlayerNumber() == PLAYER_1)
 			{
-				if (player1.playerPT1 != nullptr && player1.playerPT1->getName() == "Strategy")
+				/*if (player1.playerPT1 != nullptr && player1.playerPT1->getName() == "Strategy")
 				{
 					mConflict ++;
 				}
@@ -1998,14 +1998,14 @@ namespace Seven_Wonders {
 				if (player1.playerPT5 != nullptr && player1.playerPT5->getName() == "Strategy")
 				{
 					mConflict++;
-				}
+				}*/
 
 				
 				mConflict += (card.getShields() + ((currentPlayer.flags.strategyPTFlag) ? (1) : (0)));
 			}
 			else if (currentPlayer.getPlayerNumber() == PLAYER_2)
 			{
-				if (player2.playerPT1 != nullptr && player2.playerPT1->getName() == "Strategy")
+				/*if (player2.playerPT1 != nullptr && player2.playerPT1->getName() == "Strategy")
 				{
 					mConflict++;
 				}
@@ -2028,7 +2028,7 @@ namespace Seven_Wonders {
 				if (player2.playerPT5 != nullptr && player2.playerPT5->getName() == "Strategy")
 				{ 
 					mConflict++;
-				}
+				}*/
 				mConflict -= (card.getShields() + ((currentPlayer.flags.strategyPTFlag) ? (1) : (0)));
 			}
 			// need to set conflict to -9 or 9 in order to avoid out of range for conflict pawn vector positions
@@ -2365,7 +2365,10 @@ namespace Seven_Wonders {
 			currentPlayer.scienceSymbols.balance++;
 		}
 
-
+		if (progressToken.getName() == "Strategy")
+		{
+			currentPlayer.flags.strategyPTFlag = true;
+		}
 	}
 
 	int World::goldCostEx(Player& currentPlayer, Card& card, bool &isLinked)

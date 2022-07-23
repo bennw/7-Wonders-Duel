@@ -64,8 +64,8 @@ namespace Seven_Wonders {
 		struct flags
 		{
 			bool woodTradeFlag = false;
-			bool clayTradeFlag = false;
 			bool stoneTradeFlag = false;
+			bool clayTradeFlag = false;
 			bool papyrusTradeFlag = false;
 			bool glassTradeFlag = false;
 			bool architecturePTFlag = false;
@@ -95,11 +95,11 @@ namespace Seven_Wonders {
 		int mPlayerNumber;
 		bool mGoesFirst;
 		int mCoins = 7;
-		int mWood = 3;
-		int mStone = 3;
-		int mClay = 3;
-		int mPapyrus = 2;
-		int mGlass = 2;
+		int mWood = 0;
+		int mStone = 0;
+		int mClay = 0;
+		int mPapyrus = 0;
+		int mGlass = 0;
 		bool mStrategyFlag = false;
 		
 		static const int STARTING_COINS = 7;

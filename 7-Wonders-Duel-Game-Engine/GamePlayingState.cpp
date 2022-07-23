@@ -246,14 +246,14 @@ void GamePlayingState::draw(const float dt)
 	}
 
 	// resource flag indicators
-	if (p_game->world.player1.flags.forumResourcesFlag == true) p_game->window.draw(mPlayer1ForumFlag);
+	/*if (p_game->world.player1.flags.forumResourcesFlag == true) p_game->window.draw(mPlayer1ForumFlag);
 	if (p_game->world.player1.flags.piraeusResourcesFlag == true) p_game->window.draw(mPlayer1PiraeusFlag);
 	if (p_game->world.player1.flags.caravenseryResourcesFlag == true) p_game->window.draw(mPlayer1CaravenseryFlag);
 	if (p_game->world.player1.flags.theGreatLighthouseResourcesFlag == true) p_game->window.draw(mPlayer1TheGreatLighthouseFlag);
 	if (p_game->world.player2.flags.forumResourcesFlag == true) p_game->window.draw(mPlayer2ForumFlag);
 	if (p_game->world.player2.flags.piraeusResourcesFlag == true) p_game->window.draw(mPlayer2PiraeusFlag);
 	if (p_game->world.player2.flags.caravenseryResourcesFlag == true) p_game->window.draw(mPlayer2CaravenseryFlag);
-	if (p_game->world.player2.flags.theGreatLighthouseResourcesFlag == true) p_game->window.draw(mPlayer2TheGreatLighthouseFlag);
+	if (p_game->world.player2.flags.theGreatLighthouseResourcesFlag == true) p_game->window.draw(mPlayer2TheGreatLighthouseFlag);*/
 }
 
 void GamePlayingState::drawResourceIcons(const float dt)
@@ -1156,6 +1156,7 @@ void GamePlayingState::resetSprites()
 {
 	int x1coin = 38, y1coin = 90, x2coin = 38, y2coin = 145;
 	int x1ctxt = x1coin + 18, y1ctxt = y1coin + 20, x2ctxt = x2coin + 18, y2ctxt = y2coin + 20;
+	int x1ev = x1ctxt, y1ev = y1ctxt - 20, x2ev = x2ctxt, y2ev = y2ctxt - 20;
 
 	for (int i = 0; i < 20; i++)
 	{
@@ -1177,6 +1178,8 @@ void GamePlayingState::resetSprites()
 			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
 			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
 			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
+			txtEVIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ev, p_game->world.board[i]->getPosition()[1] + y1ev);
+			txtEVIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ev, p_game->world.board[i]->getPosition()[1] + y2ev);
 		}
 		else if (p_game->world.getAge() == 3)
 		{
@@ -1203,6 +1206,8 @@ void GamePlayingState::resetSprites()
 			spCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2coin, p_game->world.board[i]->getPosition()[1] + y2coin);
 			txtCostIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ctxt, p_game->world.board[i]->getPosition()[1] + y1ctxt);
 			txtCostIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ctxt, p_game->world.board[i]->getPosition()[1] + y2ctxt);
+			txtEVIndicatorP1[i].setPosition(p_game->world.board[i]->getPosition()[0] + x1ev, p_game->world.board[i]->getPosition()[1] + y1ev);
+			txtEVIndicatorP2[i].setPosition(p_game->world.board[i]->getPosition()[0] + x2ev, p_game->world.board[i]->getPosition()[1] + y2ev);
 		}
 		
 	}
