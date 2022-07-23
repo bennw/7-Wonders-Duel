@@ -120,24 +120,26 @@ void GamePlayingState::draw(const float dt)
 		mPlayer1GUI.setFillColor(sf::Color(126, 126, 126, 126));
 	}
 
-	player1Coins.setString("Coins:  " + to_string(p_game->world.player1.getCoins()));
-	player1Wood.setString("Wood:  " + to_string(p_game->world.player1.getWood()));
-	player1Stone.setString("Stone:  " + to_string(p_game->world.player1.getStone()));
-	player1Clay.setString("Clay:  " + to_string(p_game->world.player1.getClay()));
-	player1Papyrus.setString("Papyrus:  " + to_string(p_game->world.player1.getPapyrus()));
-	player1Glass.setString("Glass:  " + to_string(p_game->world.player1.getGlass()));
+	player1Coins.setString(to_string(p_game->world.player1.getCoins()));
+	player1Coins.setOrigin(player1Coins.getGlobalBounds().width / 2, player1Coins.getGlobalBounds().height / 2);
+	//player1Wood.setString("Wood:  " + to_string(p_game->world.player1.getWood()));
+	//player1Stone.setString("Stone:  " + to_string(p_game->world.player1.getStone()));
+	//player1Clay.setString("Clay:  " + to_string(p_game->world.player1.getClay()));
+	//player1Papyrus.setString("Papyrus:  " + to_string(p_game->world.player1.getPapyrus()));
+	//player1Glass.setString("Glass:  " + to_string(p_game->world.player1.getGlass()));
 
-	player2Coins.setString("Coins:  " + to_string(p_game->world.player2.getCoins()));
-	player2Wood.setString("Wood:  " + to_string(p_game->world.player2.getWood()));
-	player2Stone.setString("Stone:  " + to_string(p_game->world.player2.getStone()));
-	player2Clay.setString("Clay:  " + to_string(p_game->world.player2.getClay()));
-	player2Papyrus.setString("Papyrus:  " + to_string(p_game->world.player2.getPapyrus()));
-	player2Glass.setString("Glass:  " + to_string(p_game->world.player2.getGlass()));
+	player2Coins.setString(to_string(p_game->world.player2.getCoins()));
+	player2Coins.setOrigin(player2Coins.getGlobalBounds().width / 2, player2Coins.getGlobalBounds().height / 2);
+	//player2Wood.setString("Wood:  " + to_string(p_game->world.player2.getWood()));
+	//player2Stone.setString("Stone:  " + to_string(p_game->world.player2.getStone()));
+	//player2Clay.setString("Clay:  " + to_string(p_game->world.player2.getClay()));
+	//player2Papyrus.setString("Papyrus:  " + to_string(p_game->world.player2.getPapyrus()));
+	//player2Glass.setString("Glass:  " + to_string(p_game->world.player2.getGlass()));
 
 	p_game->window.draw(mPlayer1GUI);
 	p_game->window.draw(mPlayer2GUI);
-	p_game->window.draw(player1GUIText);
-	p_game->window.draw(player2GUIText);
+	//p_game->window.draw(player1GUIText);
+	//p_game->window.draw(player2GUIText);
 
 	p_game->window.draw(gameBoard);
 	p_game->window.draw(mWondersDisplay);
@@ -190,22 +192,21 @@ void GamePlayingState::draw(const float dt)
 		p_game->window.draw(militaryToken5P1);
 	}
 
-	p_game->window.draw(player1Coins);
-	p_game->window.draw(player1Wood);
-	p_game->window.draw(player1Stone);
-	p_game->window.draw(player1Clay);
-	p_game->window.draw(player1Papyrus);
-	p_game->window.draw(player1Glass);
-
-	p_game->window.draw(player2Coins);
-	p_game->window.draw(player2Wood);
-	p_game->window.draw(player2Stone);
-	p_game->window.draw(player2Clay);
-	p_game->window.draw(player2Papyrus);
-	p_game->window.draw(player2Glass);
-
 	drawResourceIcons(dt);
 
+	p_game->window.draw(player1Coins);
+	//p_game->window.draw(player1Wood);
+	//p_game->window.draw(player1Stone);
+	//p_game->window.draw(player1Clay);
+	//p_game->window.draw(player1Papyrus);
+	//p_game->window.draw(player1Glass);
+
+	p_game->window.draw(player2Coins);
+	//p_game->window.draw(player2Wood);
+	//p_game->window.draw(player2Stone);
+	//p_game->window.draw(player2Clay);
+	//p_game->window.draw(player2Papyrus);
+	//p_game->window.draw(player2Glass);
 
 	p_game->window.draw(player1City);
 	p_game->window.draw(player2City);
@@ -257,6 +258,10 @@ void GamePlayingState::draw(const float dt)
 
 void GamePlayingState::drawResourceIcons(const float dt)
 {
+	int alphaP1, alphaP2;
+	p_game->window.draw(spCoinP1);
+	p_game->window.draw(spCoinP2);
+	
 	for (int i = 0; i < min(p_game->world.player1.getWood(), MAX_RESOURCE_BASIC); ++i)
 	{
 		p_game->window.draw(spWoodP1[i]);
@@ -314,6 +319,18 @@ void GamePlayingState::drawResourceIcons(const float dt)
 	for (int i = 0; i < min(p_game->world.player2.getWildAdv(), MAX_RESOURCE_ADV_WILD); ++i)
 	{
 		p_game->window.draw(spWildAdvP2[i]);
+	}
+
+	for (int i = 0; i < 7; ++i)
+	{
+		int* ptr1 = ((int*) & (p_game->world.player1.scienceSymbols.arch)) + i;
+		int* ptr2 = ((int*) & (p_game->world.player2.scienceSymbols.arch)) + i;
+		alphaP1 = (*ptr1 > 0) ? 255 : (p_game->world.bstate.sciUnavailable[i][0] ? 0 : 80);
+		alphaP2 = (*ptr2 > 0) ? 255 : (p_game->world.bstate.sciUnavailable[i][1] ? 0 : 80);
+		spSciP1[i].setColor(sf::Color(255, 255, 255, alphaP1));
+		spSciP2[i].setColor(sf::Color(255, 255, 255, alphaP2));
+		p_game->window.draw(spSciP1[i]);
+		p_game->window.draw(spSciP2[i]);
 	}
 }
 
@@ -387,7 +404,7 @@ void GamePlayingState::handleInput()
 				for (int i = 0; i < 20; i++)
 				{
 					if (p_game->inputManager.isObjectClicked(mCardSprites[i], event.mouseButton.button, p_game->window) == true &&
-						p_game->world.board[i]->getFaceup() == true)
+						p_game->world.board[i] && p_game->world.board[i]->getFaceup() == true)
 					{						
 						clickedCard = &p_game->world.board[i];
 						clickedCardIndex = i;
@@ -795,7 +812,7 @@ GamePlayingState::GamePlayingState(Game * game)
 	mPlayer2GUI.setSize(PLAYER_GUI_SIZE);
 	mPlayer2GUI.setFillColor(sf::Color(126,126,126,126));
 
-	player1GUIText.setFont(game->fontManager.getRef("Menu Font"));
+	/*player1GUIText.setFont(game->fontManager.getRef("Menu Font"));
 	player1GUIText.setString("Player 1");
 	player1GUIText.setCharacterSize(40);
 	player1GUIText.setPosition(720.0f, 10.0f);
@@ -805,7 +822,7 @@ GamePlayingState::GamePlayingState(Game * game)
 	player2GUIText.setString("Player 2");
 	player2GUIText.setCharacterSize(40);
 	player2GUIText.setPosition(720.0f, 835.0f);
-	player2GUIText.setFillColor(sf::Color::White);
+	player2GUIText.setFillColor(sf::Color::White);*/
 
 	gameBoard.setTexture(game->textureManager.getRef("Game Board"));
 	gameBoard.setScale(0.83f, 0.83f);
@@ -836,6 +853,15 @@ GamePlayingState::GamePlayingState(Game * game)
 	militaryToken5P2.setOrigin(militaryToken5P2.getGlobalBounds().width / 2, militaryToken5P2.getGlobalBounds().height / 2);
 	militaryToken5P2.setPosition(187.0f, 695.0f);
 
+	spCoinP1.setTexture(p_game->textureManager.getRef("Coin Big"));
+	spCoinP2.setTexture(p_game->textureManager.getRef("Coin Big"));
+	spCoinP1.setScale(0.25f, 0.25f);
+	spCoinP2.setScale(0.25f, 0.25f);
+	spCoinP1.setOrigin(spCoinP1.getGlobalBounds().width / 2, spCoinP1.getGlobalBounds().height / 2);
+	spCoinP2.setOrigin(spCoinP2.getGlobalBounds().width / 2, spCoinP2.getGlobalBounds().height / 2);
+	spCoinP1.setPosition(20.0f, 15.0f);
+	spCoinP2.setPosition(20.0f, 840.0f);
+
 	for (int i = 0; i < MAX_RESOURCE_BASIC; ++i)
 	{
 		spWoodP1[i].setTexture(p_game->textureManager.getRef("Wood"));
@@ -847,9 +873,9 @@ GamePlayingState::GamePlayingState(Game * game)
 		spWoodP1[i].setOrigin(spWoodP1[i].getGlobalBounds().width / 2, spWoodP1[i].getGlobalBounds().height / 2);
 		spStoneP1[i].setOrigin(spStoneP1[i].getGlobalBounds().width / 2, spStoneP1[i].getGlobalBounds().height / 2);
 		spClayP1[i].setOrigin(spClayP1[i].getGlobalBounds().width / 2, spClayP1[i].getGlobalBounds().height / 2);
-		spWoodP1[i].setPosition(130.0f + 20.0f*i, 20.0f);
-		spStoneP1[i].setPosition(230.0f + 20.0f * i, 20.0f);
-		spClayP1[i].setPosition(330.0f + 20.0f * i, 20.0f);
+		spWoodP1[i].setPosition(100.0f, 20.0f + 15.0f * i);
+		spStoneP1[i].setPosition(160.0f, 20.0f + 15.0f * i);
+		spClayP1[i].setPosition(220.0f, 20.0f + 15.0f * i);
 		spWoodP2[i].setTexture(p_game->textureManager.getRef("Wood"));
 		spStoneP2[i].setTexture(p_game->textureManager.getRef("Stone"));
 		spClayP2[i].setTexture(p_game->textureManager.getRef("Clay"));
@@ -859,20 +885,20 @@ GamePlayingState::GamePlayingState(Game * game)
 		spWoodP2[i].setOrigin(spWoodP2[i].getGlobalBounds().width / 2, spWoodP2[i].getGlobalBounds().height / 2);
 		spStoneP2[i].setOrigin(spStoneP2[i].getGlobalBounds().width / 2, spStoneP2[i].getGlobalBounds().height / 2);
 		spClayP2[i].setOrigin(spClayP2[i].getGlobalBounds().width / 2, spClayP2[i].getGlobalBounds().height / 2);
-		spWoodP2[i].setPosition(130.0f + 20.0f * i, 845.0f);
-		spStoneP2[i].setPosition(230.0f + 20.0f * i, 845.0f);
-		spClayP2[i].setPosition(330.0f + 20.0f * i, 845.0f);
+		spWoodP2[i].setPosition(100.0f, 860.0f - 15.0f * i);
+		spStoneP2[i].setPosition(160.0f, 860.0f - 15.0f * i);
+		spClayP2[i].setPosition(220.0f, 860.0f - 15.0f * i);
 	}
 	for (int i = 0; i < MAX_RESOURCE_BASIC_WILD; ++i)
 	{
 		spWildBasicP1[i].setTexture(p_game->textureManager.getRef("Wild Basic"));
 		spWildBasicP1[i].setScale(0.5f, 0.5f);
 		spWildBasicP1[i].setOrigin(spWildBasicP1[i].getGlobalBounds().width / 2, spWildBasicP1[i].getGlobalBounds().height / 2);
-		spWildBasicP1[i].setPosition(430.0f + 20.0f * i, 20.0f);
+		spWildBasicP1[i].setPosition(280.0f, 20.0f + 15.0f * i);
 		spWildBasicP2[i].setTexture(p_game->textureManager.getRef("Wild Basic"));
 		spWildBasicP2[i].setScale(0.5f, 0.5f);
 		spWildBasicP2[i].setOrigin(spWildBasicP2[i].getGlobalBounds().width / 2, spWildBasicP2[i].getGlobalBounds().height / 2);
-		spWildBasicP2[i].setPosition(430.0f + 20.0f * i, 845.0f);
+		spWildBasicP2[i].setPosition(280.0f + 20.0f * i, 860.0f - 15.0f * i);
 	}
 	for (int i = 0; i < MAX_RESOURCE_ADV; ++i)
 	{
@@ -882,27 +908,27 @@ GamePlayingState::GamePlayingState(Game * game)
 		spGlassP1[i].setScale(0.5f, 0.5f);
 		spPaperP1[i].setOrigin(spPaperP1[i].getGlobalBounds().width / 2, spPaperP1[i].getGlobalBounds().height / 2);
 		spGlassP1[i].setOrigin(spGlassP1[i].getGlobalBounds().width / 2, spGlassP1[i].getGlobalBounds().height / 2);
-		spPaperP1[i].setPosition(550.0f + 20.0f * i, 20.0f);
-		spGlassP1[i].setPosition(650.0f + 20.0f * i, 20.0f);
+		spPaperP1[i].setPosition(340.0f, 20.0f + 15.0f * i);
+		spGlassP1[i].setPosition(400.0f, 20.0f + 15.0f * i);
 		spPaperP2[i].setTexture(p_game->textureManager.getRef("Paper"));
 		spGlassP2[i].setTexture(p_game->textureManager.getRef("Glass"));
 		spPaperP2[i].setScale(0.5f, 0.5f);
 		spGlassP2[i].setScale(0.5f, 0.5f);
 		spPaperP2[i].setOrigin(spPaperP2[i].getGlobalBounds().width / 2, spPaperP2[i].getGlobalBounds().height / 2);
 		spGlassP2[i].setOrigin(spGlassP2[i].getGlobalBounds().width / 2, spGlassP2[i].getGlobalBounds().height / 2);
-		spPaperP2[i].setPosition(550.0f + 20.0f * i, 845.0f);
-		spGlassP2[i].setPosition(650.0f + 20.0f * i, 845.0f);
+		spPaperP2[i].setPosition(340.0f, 860.0f - 15.0f * i);
+		spGlassP2[i].setPosition(400.0f, 860.0f - 15.0f * i);
 	}
 	for (int i = 0; i < MAX_RESOURCE_ADV_WILD; ++i)
 	{
 		spWildAdvP1[i].setTexture(p_game->textureManager.getRef("Wild Adv"));
 		spWildAdvP1[i].setScale(0.5f, 0.5f);
 		spWildAdvP1[i].setOrigin(spWildAdvP1[i].getGlobalBounds().width / 2, spWildAdvP1[i].getGlobalBounds().height / 2);
-		spWildAdvP1[i].setPosition(750.0f + 20.0f * i, 20.0f);
+		spWildAdvP1[i].setPosition(460.0f, 20.0f + 15.0f * i);
 		spWildAdvP2[i].setTexture(p_game->textureManager.getRef("Wild Adv"));
 		spWildAdvP2[i].setScale(0.5f, 0.5f);
 		spWildAdvP2[i].setOrigin(spWildAdvP2[i].getGlobalBounds().width / 2, spWildAdvP2[i].getGlobalBounds().height / 2);
-		spWildAdvP2[i].setPosition(750.0f + 20.0f * i, 845.0f);
+		spWildAdvP2[i].setPosition(460.0f, 860.0f - 15.0f * i);
 	}
 	for (int i = 0; i < 20; ++i)
 	{
@@ -923,6 +949,20 @@ GamePlayingState::GamePlayingState(Game * game)
 		txtEVIndicatorP2[i].setCharacterSize(20);
 		txtEVIndicatorP2[i].setColor(sf::Color::Green);
 	}
+	initializer_list<string> sciRef = {
+		"Sci Arch", "Sci Mortar", "Sci Quill", "Sci Wheel", "Sci Sundial", "Sci Globe", "Sci Law"
+	};
+	for (int i = 0; i < 7; ++i)
+	{
+		spSciP1[i].setTexture(p_game->textureManager.getRef(sciRef.begin()[i]));
+		spSciP2[i].setTexture(p_game->textureManager.getRef(sciRef.begin()[i]));
+		spSciP1[i].setScale(0.60f, 0.60f);
+		spSciP2[i].setScale(0.60f, 0.60f);
+		spSciP1[i].setOrigin(spSciP1[i].getGlobalBounds().width / 2, spSciP1[i].getGlobalBounds().height / 2);
+		spSciP2[i].setOrigin(spSciP2[i].getGlobalBounds().width / 2, spSciP2[i].getGlobalBounds().height / 2);
+		spSciP1[i].setPosition(530.0f + 40.0f * i, 30.0f);
+		spSciP2[i].setPosition(530.0f + 40.0f * i, 856.0f);
+	}
 
 		
 
@@ -940,12 +980,12 @@ GamePlayingState::GamePlayingState(Game * game)
 	player2Turn.setFillColor(sf::Color::White);
 
 	player1Coins.setFont(game->fontManager.getRef("Menu Font"));
-	player1Coins.setString("Coins:  " + to_string(p_game->world.player1.getCoins()));
-	player1Coins.setCharacterSize(25);
-	player1Coins.setPosition(30.0f, 20.0f);
+	player1Coins.setString(to_string(p_game->world.player1.getCoins()));
+	player1Coins.setCharacterSize(32);
+	player1Coins.setPosition(41.0f, 28.0f);
 	player1Coins.setFillColor(sf::Color::White);
 
-	player1Wood.setFont(game->fontManager.getRef("Menu Font"));
+	/*player1Wood.setFont(game->fontManager.getRef("Menu Font"));
 	player1Wood.setString("Wood:  " + to_string(p_game->world.player1.getWood()));
 	player1Wood.setCharacterSize(25);
 	player1Wood.setPosition(130.0f, 20.0f);
@@ -973,21 +1013,19 @@ GamePlayingState::GamePlayingState(Game * game)
 	player1Glass.setString("Glass:  " + to_string(p_game->world.player1.getGlass()));
 	player1Glass.setCharacterSize(25);
 	player1Glass.setPosition(570.0f, 20.0f);
-	player1Glass.setFillColor(sf::Color::White);
+	player1Glass.setFillColor(sf::Color::White);*/
 
 	player2Coins.setFont(game->fontManager.getRef("Menu Font"));
-	player2Coins.setString("Coins:  " + to_string(p_game->world.player2.getCoins()));
-	player2Coins.setCharacterSize(25);
-	player2Coins.setPosition(30.0f, 845.0f);
+	player2Coins.setString(to_string(p_game->world.player2.getCoins()));
+	player2Coins.setCharacterSize(32);
+	player2Coins.setPosition(41.0f, 854.0f);
 	player2Coins.setFillColor(sf::Color::White);
 
-	player2Wood.setFont(game->fontManager.getRef("Menu Font"));
+	/*player2Wood.setFont(game->fontManager.getRef("Menu Font"));
 	player2Wood.setString(to_string(p_game->world.player2.getWood()));
 	player2Wood.setCharacterSize(25);
 	player2Wood.setPosition(130.0f, 845.0f);
 	player2Wood.setFillColor(sf::Color::White);
-
-
 
 	player2Stone.setFont(game->fontManager.getRef("Menu Font"));
 	player2Stone.setString("Stone:  " + to_string(p_game->world.player2.getStone()));
@@ -1011,7 +1049,7 @@ GamePlayingState::GamePlayingState(Game * game)
 	player2Glass.setString("Glass:  " + to_string(p_game->world.player2.getGlass()));
 	player2Glass.setCharacterSize(25);
 	player2Glass.setPosition(570.0f, 845.0f);
-	player2Glass.setFillColor(sf::Color::White);
+	player2Glass.setFillColor(sf::Color::White);*/
 
 	player2City.setFillColor(sf::Color(54, 204, 51));
 	player2City.setSize(BUTTON_SIZE);
@@ -1024,14 +1062,14 @@ GamePlayingState::GamePlayingState(Game * game)
 	player1City.setOrigin(player1City.getGlobalBounds().width / 2, player1City.getGlobalBounds().height / 2);
 
 	txtPlayer2City.setFont(game->fontManager.getRef("Menu Font"));
-	txtPlayer2City.setString("View City");
+	txtPlayer2City.setString("P2 City");
 	txtPlayer2City.setCharacterSize(35);
 	txtPlayer2City.setFillColor(sf::Color::White);
 	txtPlayer2City.setOrigin(txtPlayer2City.getGlobalBounds().width / 2, txtPlayer2City.getGlobalBounds().height / 2);
 	txtPlayer2City.setPosition(player2City.getPosition());
 	
 	txtPlayer1City.setFont(game->fontManager.getRef("Menu Font"));
-	txtPlayer1City.setString("View City");
+	txtPlayer1City.setString("P1 City");
 	txtPlayer1City.setCharacterSize(35);
 	txtPlayer1City.setFillColor(sf::Color::White);
 	txtPlayer1City.setOrigin(txtPlayer1City.getGlobalBounds().width / 2, txtPlayer1City.getGlobalBounds().height / 2);

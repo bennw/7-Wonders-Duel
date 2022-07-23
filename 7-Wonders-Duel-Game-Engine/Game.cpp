@@ -210,7 +210,15 @@ void Game::loadTextures()
 	textureManager.loadTexture("Wild Basic", "Resources/Icons/wildbasic.png");
 	textureManager.loadTexture("Wild Adv", "Resources/Icons/wildadv.png");
 	textureManager.loadTexture("Coin", "Resources/Icons/coin.png");
+	textureManager.loadTexture("Coin Big", "Resources/Icons/coinbig.png");
 
+	textureManager.loadTexture("Sci Arch", "Resources/Icons/sciarch.png");
+	textureManager.loadTexture("Sci Mortar", "Resources/Icons/scimortar.png");
+	textureManager.loadTexture("Sci Quill", "Resources/Icons/sciquill.png");
+	textureManager.loadTexture("Sci Wheel", "Resources/Icons/sciwheel.png");
+	textureManager.loadTexture("Sci Sundial", "Resources/Icons/scisundial.png");
+	textureManager.loadTexture("Sci Globe", "Resources/Icons/sciglobe.png");
+	textureManager.loadTexture("Sci Law", "Resources/Icons/scilaw.png");
 }
 
 void Game::loadFonts()

@@ -30,6 +30,10 @@ namespace Seven_Wonders {
 		short wonderBuilt[4][2] = { 0 }; // 0 = unbuilt, 1 = built
 		int conflict; // negative = P2 winning, positive = P1 winning
 		int discardEV[2] = { 0 };
+
+		int sciDiscarded[7] = { 0 };
+		int sciOwned[7][2] = { 0 };
+		bool sciUnavailable[7][2] = {0};
 	private:
 	};
 

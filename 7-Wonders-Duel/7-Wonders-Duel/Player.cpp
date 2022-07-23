@@ -152,6 +152,22 @@ namespace Seven_Wonders {
 
 	}
 
+	bool Player::hasUnbuiltMausoleum()
+	{
+		for (Card* c : playerWonderDeck)
+		{
+			if (c->getIndex() == 79 && c->builtWonder == false) return true;
+		}
+		return false;
+	}
+	bool Player::hasUnbuiltLibrary()
+	{
+		for (Card* c : playerWonderDeck)
+		{
+			if (c->getIndex() == 76 && c->builtWonder == false) return true;
+		}
+		return false;
+	}
 }
 
 

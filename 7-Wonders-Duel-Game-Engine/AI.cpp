@@ -114,8 +114,10 @@ silver_card_ev:
 			// -70 if not multicritical
 			if (resource == ResourceType::Wood)
 			{
-				// TODO add logic that allows procuring wood if law is on the table
-				if (requiredWood[p] - ownedWood[p] < 1) EV -= 70;
+				// no law
+				if (bstate->sciUnavailable[6][p] == 1 && bstate->sciOwned[6][p] == 0) {
+					if (requiredWood[p] - ownedWood[p] < 1) EV -= 70;
+				}
 			}
 			else if (resource == ResourceType::Clay)
 			{
@@ -147,7 +149,7 @@ silver_card_ev:
 		case IdxAltar:
 		case IdxBaths:
 			EV = 0;
-			if (/* TODO no law &&*/ bstate->cardCost[c][p] == 0 && bstate->playerCoins[p] > 2) EV = 57;
+			if ((bstate->sciUnavailable[6][p] == 1 && bstate->sciOwned[6][p] == 0) && bstate->cardCost[c][p] == 0 && bstate->playerCoins[p] > 2) EV = 57;
 			break;
 		default:
 			EV = 0;

@@ -38,6 +38,8 @@ namespace Seven_Wonders {
 		int getWildAdv();
 		int getDiscardGoldValue();
 		void resetResources();
+		bool hasUnbuiltMausoleum();
+		bool hasUnbuiltLibrary();
 		vector<Card*> playerCity;
 		vector<Card*> playerWonderDeck;
 		//vector<ProgressToken*> playerPTDeck;
@@ -50,13 +52,13 @@ namespace Seven_Wonders {
 
 		struct scienceSymbols
 		{
-			int globe = 0;
-			int balance = 0;
-			int tablet = 0;
-			int mortar = 0;
 			int arch = 0;
+			int mortar = 0;
 			int quill = 0;
 			int wheel = 0;
+			int sundial = 0;
+			int globe = 0;
+			int balance = 0;
 		};
 
 		struct flags
@@ -93,11 +95,11 @@ namespace Seven_Wonders {
 		int mPlayerNumber;
 		bool mGoesFirst;
 		int mCoins = 7;
-		int mWood = 0;
-		int mStone = 0;
-		int mClay = 0;
-		int mPapyrus = 0;
-		int mGlass = 0;
+		int mWood = 3;
+		int mStone = 3;
+		int mClay = 3;
+		int mPapyrus = 2;
+		int mGlass = 2;
 		bool mStrategyFlag = false;
 		
 		static const int STARTING_COINS = 7;

@@ -35,24 +35,24 @@ public:
 	sf::Sound civilianVictorySound;
 
 	// texts, some are for testing only
-	sf::Text player1GUIText;
-	sf::Text player2GUIText;
+	//sf::Text player1GUIText;
+	//sf::Text player2GUIText;
 	sf::Text gameBoardGUIText;
 	sf::Text wondersDisplayText;
 	sf::Text player1Turn;
 	sf::Text player2Turn;
 	sf::Text player1Coins;
-	sf::Text player1Wood;
-	sf::Text player1Stone;
-	sf::Text player1Clay;
-	sf::Text player1Papyrus;
-	sf::Text player1Glass;
+	//sf::Text player1Wood;
+	//sf::Text player1Stone;
+	//sf::Text player1Clay;
+	//sf::Text player1Papyrus;
+	//sf::Text player1Glass;
 	sf::Text player2Coins;
-	sf::Text player2Wood;
-	sf::Text player2Stone;
-	sf::Text player2Clay;
-	sf::Text player2Papyrus;
-	sf::Text player2Glass;
+	//sf::Text player2Wood;
+	//sf::Text player2Stone;
+	//sf::Text player2Clay;
+	//sf::Text player2Papyrus;
+	//sf::Text player2Glass;
 	sf::Text progressTokenText1;
 	sf::Text progressTokenText2;
 	sf::Text progressTokenText3;
@@ -128,6 +128,8 @@ public:
 	sf::Sprite militaryToken2P2;
 	sf::Sprite militaryToken5P2;
 
+	sf::Sprite spCoinP1;
+	sf::Sprite spCoinP2;
 	sf::Sprite spWoodP1[MAX_RESOURCE_BASIC];
 	sf::Sprite spStoneP1[MAX_RESOURCE_BASIC];
 	sf::Sprite spClayP1[MAX_RESOURCE_BASIC];
@@ -135,7 +137,6 @@ public:
 	sf::Sprite spGlassP1[MAX_RESOURCE_ADV];
 	sf::Sprite spWildBasicP1[MAX_RESOURCE_BASIC_WILD];
 	sf::Sprite spWildAdvP1[MAX_RESOURCE_ADV_WILD];
-
 	sf::Sprite spWoodP2[MAX_RESOURCE_BASIC];
 	sf::Sprite spStoneP2[MAX_RESOURCE_BASIC];
 	sf::Sprite spClayP2[MAX_RESOURCE_BASIC];
@@ -143,6 +144,8 @@ public:
 	sf::Sprite spGlassP2[MAX_RESOURCE_ADV];
 	sf::Sprite spWildBasicP2[MAX_RESOURCE_BASIC_WILD];
 	sf::Sprite spWildAdvP2[MAX_RESOURCE_ADV_WILD];
+	sf::Sprite spSciP1[7];
+	sf::Sprite spSciP2[7];
 
 	sf::Sprite spCostIndicatorP1[20];
 	sf::Sprite spCostIndicatorP2[20];

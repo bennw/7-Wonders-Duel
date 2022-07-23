@@ -158,13 +158,13 @@ namespace Seven_Wonders {
 
 	// Green Card Science Symbols
 	const int SCIENCE_SYMBOL_NONE = 0;
-	const int SCIENCE_SYMBOL_GLOBE = 1;
-	const int SCIENCE_SYMBOL_BALANCE = 2;
-	const int SCIENCE_SYMBOL_TABLET = 3;
-	const int SCIENCE_SYMBOL_MORTAR = 4;
-	const int SCIENCE_SYMBOL_ARCH = 5;
-	const int SCIENCE_SYMBOL_QUILL = 6;
-	const int SCIENCE_SYMBOL_WHEEL = 7;
+	const int SCIENCE_SYMBOL_GLOBE = 6;
+	const int SCIENCE_SYMBOL_BALANCE = 7;
+	const int SCIENCE_SYMBOL_SUNDIAL = 5;
+	const int SCIENCE_SYMBOL_MORTAR = 2;
+	const int SCIENCE_SYMBOL_ARCH = 1;
+	const int SCIENCE_SYMBOL_QUILL = 3;
+	const int SCIENCE_SYMBOL_WHEEL = 4;
 
 	// Game Properties
 	const int GAME_WINDOW_WIDTH = 1600;

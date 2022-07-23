@@ -351,10 +351,10 @@ namespace Seven_Wonders {
 			return SCIENCE_SYMBOL_ARCH;
 			break;
 		case 48: // academy
-			return SCIENCE_SYMBOL_TABLET;
+			return SCIENCE_SYMBOL_SUNDIAL;
 			break;
 		case 49: // study
-			return SCIENCE_SYMBOL_TABLET;
+			return SCIENCE_SYMBOL_SUNDIAL;
 			break;
 		case 59: // university
 			return SCIENCE_SYMBOL_GLOBE;

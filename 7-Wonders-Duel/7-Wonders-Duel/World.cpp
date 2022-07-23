@@ -384,6 +384,10 @@ namespace Seven_Wonders {
 		}
 
 		discardDeck.push_back(board[clickedCardIndex]);
+		if (board[clickedCardIndex]->getScienceSymbol())
+		{
+			bstate.sciDiscarded[board[clickedCardIndex]->getScienceSymbol()]++;
+		}
 
 		coinsDelta = currentPlayer->getDiscardGoldValue();
 		currentPlayer->setCoins(coinsDelta);
@@ -770,6 +774,34 @@ namespace Seven_Wonders {
 				bstate.wonderAfford[w][p] = bstate.wonderCost[w][p] <= bstate.playerCoins[p];
 			}
 
+			// sci
+			for (int s = 0; s < 7; ++s)
+			{
+				int* ptr = ((int*)&player.scienceSymbols.arch) + s;
+				bstate.sciOwned[s][p] = *ptr;
+				if (s < 6 && bstate.sciOwned[s][0] + bstate.sciOwned[s][1] + bstate.sciDiscarded[s] >= 2) {
+					if (player1.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0 == false) bstate.sciUnavailable[s][0] = true;
+					if (player2.hasUnbuiltMausoleum() && bstate.sciDiscarded[s] > 0 == false) bstate.sciUnavailable[s][1] = true;
+				}
+				else if (s == 6)
+				{
+					if (bstate.sciOwned[s][0] + bstate.sciOwned[s][1] + bstate.sciDiscarded[s] >= 1) {
+						bstate.sciUnavailable[s][0] = true;
+						bstate.sciUnavailable[s][1] = true;
+					}
+					else {
+						bool hasLaw = false;
+						for (ProgressToken* pt : progressTokenDeck) {
+							if (pt && pt->getName() == "Law") { hasLaw = true; break; }
+						}
+						if (!hasLaw) {
+							if (player1.hasUnbuiltLibrary() == false) bstate.sciUnavailable[s][0] = true;
+							if (player2.hasUnbuiltLibrary() == false) bstate.sciUnavailable[s][1] = true;
+						}
+					}
+				}
+			}
+
 			// AI (resources)
 			ai.ownedClay[p] = player.getClay() + player.flags.clayTradeFlag;
 			ai.ownedWood[p] = player.getWood() + player.flags.woodTradeFlag;
@@ -819,7 +851,7 @@ namespace Seven_Wonders {
 			}
 		}
 
-		if (!isBoardValid) return;
+		if (!isBoardValid) return; // all cards of that age have been taken already
 		
 		if (bstate.discardEV[0] > EVSelected)
 		{
@@ -1195,7 +1227,7 @@ namespace Seven_Wonders {
 		if (currentPlayer.scienceSymbols.balance >= 1) symbolCounter++;
 		if (currentPlayer.scienceSymbols.globe >= 1) symbolCounter++;
 		if (currentPlayer.scienceSymbols.mortar >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.tablet >= 1) symbolCounter++;
+		if (currentPlayer.scienceSymbols.sundial >= 1) symbolCounter++;
 		if (currentPlayer.scienceSymbols.wheel >= 1) symbolCounter++;
 		if (currentPlayer.scienceSymbols.quill >= 1) symbolCounter++;
 
@@ -1917,9 +1949,9 @@ namespace Seven_Wonders {
 				currentPlayer.scienceSymbols.globe++;
 				if (currentPlayer.scienceSymbols.globe == 2) progressTokenState = true;
 				break;
-			case SCIENCE_SYMBOL_TABLET:
-				currentPlayer.scienceSymbols.tablet++;
-				if (currentPlayer.scienceSymbols.tablet == 2) progressTokenState = true;
+			case SCIENCE_SYMBOL_SUNDIAL:
+				currentPlayer.scienceSymbols.sundial++;
+				if (currentPlayer.scienceSymbols.sundial == 2) progressTokenState = true;
 				break;
 			case SCIENCE_SYMBOL_MORTAR:
 				currentPlayer.scienceSymbols.mortar++;
