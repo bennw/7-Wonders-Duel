@@ -350,9 +350,12 @@ void GamePlayingState::drawResourceIcons(const float dt)
 
 void GamePlayingState::update(const float dt)
 {
-	if (p_game->world.executeAI())
+	if (p_game->world.checkForChoosePlayer == false)
 	{
-		if (p_game->world.checkForNewAge() == true) resetSprites();
+		if (p_game->world.executeAI())
+		{
+			if (p_game->world.checkForNewAge() == true) resetSprites();
+		}
 	}
 
 	checkForDestroyingBrownCard();

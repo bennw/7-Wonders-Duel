@@ -148,7 +148,7 @@ namespace Seven_Wonders {
 			p = 0;
 			opposingPlayer = &player2;
 		}
-		else if (currentPlayer == &player2)
+		else //if (currentPlayer == &player2)
 		{
 			p = 1;
 			opposingPlayer = &player1;
@@ -249,10 +249,13 @@ namespace Seven_Wonders {
 
 	void World::buildProgressToken(int progressTokenNumber)
 	{
+		int p;
+
 		if (buildPTFromDiscard == false)
 		{
 			if (currentPlayer == &player1)
 			{
+				p = 0;
 				if (player1CountPT == 0)
 				{
 					currentPlayer->playerPT1 = progressTokenDeck[progressTokenNumber];
@@ -277,6 +280,7 @@ namespace Seven_Wonders {
 
 			if (currentPlayer == &player2)
 			{
+				p = 1;
 				if (player2CountPT == 0)
 				{
 					currentPlayer->playerPT1 = progressTokenDeck[progressTokenNumber];
@@ -299,6 +303,8 @@ namespace Seven_Wonders {
 				}
 			}
 			doEffect(*currentPlayer, *progressTokenDeck[progressTokenNumber]);
+
+			setGameLog(p, string("Progress token: ") + progressTokenDiscardDeck[progressTokenNumber]->getName(), -1, 0);
 
 			progressTokenDeck[progressTokenNumber] = nullptr;
 		}
@@ -354,6 +360,8 @@ namespace Seven_Wonders {
 			}
 			doEffect(*currentPlayer, *progressTokenDiscardDeck[progressTokenNumber]);
 
+			setGameLog(p, string("Progress token: ") + progressTokenDiscardDeck[progressTokenNumber]->getName(), -1, 0);
+
 			progressTokenDiscardDeck[progressTokenNumber] = nullptr;
 			buildPTFromDiscard = false;
 		}
@@ -408,12 +416,21 @@ namespace Seven_Wonders {
 	void World::buildWonder(int wonderNumber, int clickedCardIndex)
 	{
 		bool bNextTurn = false;
+		int p, coinsDelta;
 
 		currentPlayer->playerWonderDeck[wonderNumber - 1]->builtWonder = true;
 
 		Player * opposingPlayer;
-		if (currentPlayer == &player1) opposingPlayer = &player2;
-		else if (currentPlayer == &player2) opposingPlayer = &player1;
+		if (currentPlayer == &player1)
+		{
+			opposingPlayer = &player2; 
+			p = 0;
+		}
+		else //if (currentPlayer == &player2)
+		{
+			opposingPlayer = &player1;
+			p = 1;
+		}
 
 		//Take in the current Player, if the current player holds the Theology progress Token then return that is the current players turn. Else change turns to other player.
 		if (currentPlayer->playerPT1 != nullptr && currentPlayer->playerPT1->getName() == "Theology")
@@ -443,7 +460,8 @@ namespace Seven_Wonders {
 		wonderCount++;
 
 		// Coin changes for building player
-		currentPlayer->setCoins(goldCost(*currentPlayer, *currentPlayer->playerWonderDeck[wonderNumber - 1]));
+		coinsDelta = goldCost(*currentPlayer, *currentPlayer->playerWonderDeck[wonderNumber - 1]);
+		currentPlayer->setCoins(coinsDelta);
 		// Coin changes for opposing player if they have the economy PT
 		bool economyFlag = false;
 		if (opposingPlayer->playerPT1 != nullptr && opposingPlayer->playerPT1->getName() == "Economy")
@@ -467,6 +485,8 @@ namespace Seven_Wonders {
 			economyFlag = true;
 		}
 		if (economyFlag == true) opposingPlayer->setCoins(-1 * (goldCost(*currentPlayer, *currentPlayer->playerWonderDeck[wonderNumber - 1]) - currentPlayer->playerWonderDeck[wonderNumber - 1]->getCoinCost()));
+
+		setGameLog(p, "Build", board[clickedCardIndex]->getIndex(), coinsDelta);
 
 		board[clickedCardIndex] = nullptr;
 
@@ -1178,7 +1198,6 @@ namespace Seven_Wonders {
 			{
 				for (int i = 0; i < 20; i++)
 				{
-
 					board[i] = &age2Deck[i];
 				}
 				checkForChoosePlayer = true;
@@ -1208,29 +1227,32 @@ namespace Seven_Wonders {
 		return false;
 	}
 
-	bool World::checkForScienceVictory(Player & currentPlayer)
+	bool World::checkForScienceVictory()
 	{
-		int symbolCounter = 0;
-		if (currentPlayer.scienceSymbols.arch >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.balance >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.globe >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.mortar >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.sundial >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.wheel >= 1) symbolCounter++;
-		if (currentPlayer.scienceSymbols.quill >= 1) symbolCounter++;
-
-		if (symbolCounter >= 6 && currentPlayer.getPlayerNumber() == PLAYER_1) 
-		{ 
-			player1ScienceVictory = true; 
-			return true; 
-		}
-
-		if (symbolCounter >= 6 && currentPlayer.getPlayerNumber() == PLAYER_2) 
+		for (const Player &pl : { player1, player2 })
 		{
-			player2ScienceVictory = true;
-			return true;
+			int symbolCounter = 0;
+			if (pl.scienceSymbols.arch >= 1) symbolCounter++;
+			if (pl.scienceSymbols.balance >= 1) symbolCounter++;
+			if (pl.scienceSymbols.globe >= 1) symbolCounter++;
+			if (pl.scienceSymbols.mortar >= 1) symbolCounter++;
+			if (pl.scienceSymbols.sundial >= 1) symbolCounter++;
+			if (pl.scienceSymbols.wheel >= 1) symbolCounter++;
+			if (pl.scienceSymbols.quill >= 1) symbolCounter++;
+
+			if (symbolCounter >= 6 && pl.getPlayerNumber() == PLAYER_1)
+			{
+				player1ScienceVictory = true;
+				return true;
+			}
+
+			if (symbolCounter >= 6 && pl.getPlayerNumber() == PLAYER_2)
+			{
+				player2ScienceVictory = true;
+				return true;
+			}
 		}
-		else return false;
+		return false;
 	}
 
 
@@ -2709,7 +2731,14 @@ namespace Seven_Wonders {
 	void World::setGameLog(int p, string strAction, int idxCard, int coinsDelta)
 	{
 		stringstream ss;
-		ss << "[P" << p + 1 << "] " << strAction << " " << cardName[idxCard] << " for $" << abs(coinsDelta);
+		if (idxCard >= 0)
+		{
+			ss << "[P" << p + 1 << "] " << strAction << " " << cardName[idxCard] << " for $" << abs(coinsDelta);
+		}
+		else
+		{
+			ss << "[P" << p + 1 << "] " << strAction;
+		}
 		strGameLog2 = strGameLog1;
 		strGameLog1 = ss.str();
 	}

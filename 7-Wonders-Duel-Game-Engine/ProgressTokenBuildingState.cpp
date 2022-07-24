@@ -180,6 +180,9 @@ void ProgressTokenBuildingState::handleInput()
 		default: break;
 		} // end of switch
 	} // end of while
+
+	p_game->world.checkForScienceVictory();
+
 	if (poppingState == true)
 	{
 		p_game->world.progressTokenState = false;

@@ -97,6 +97,8 @@ void CardPickerState::handleInput()
 					buildCardSound.play();
 
 					poppingState = true;
+
+					if (p_game->world.checkForScienceVictory()) goto EXIT;
 				}
 				else if (p_game->inputManager.isObjectClicked(discardRectangle, event.mouseButton.button, p_game->window) == true)
 				{
@@ -167,6 +169,7 @@ void CardPickerState::handleInput()
 		p_game->pushState(new WonderBuildingState(p_game, this, p_GamePlayingState));
 	}
 
+EXIT:
 	if (poppingState == true)
 	{
 		p_game->popState(); // state is popped here since there is no while loop to return to at this point

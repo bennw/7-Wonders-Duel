@@ -69,7 +69,7 @@ namespace Seven_Wonders {
 		bool player1Chosen = false;
 		bool player2Chosen = false;
 
-		bool checkForScienceVictory(Player & currentPlayer);
+		bool checkForScienceVictory();
 
 		bool playAgain = false;
 

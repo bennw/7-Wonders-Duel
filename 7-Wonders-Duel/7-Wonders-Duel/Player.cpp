@@ -40,7 +40,7 @@ namespace Seven_Wonders {
 			"Glass: " << getGlass() << endl << endl;
 	}
 
-	int Player::getPlayerNumber()
+	int Player::getPlayerNumber() const
 	{
 		return mPlayerNumber;
 	}
@@ -50,12 +50,12 @@ namespace Seven_Wonders {
 		mGoesFirst = goesfirst;
 	}
 
-	bool Player::getGoesFirst()
+	bool Player::getGoesFirst() const
 	{
 		return mGoesFirst;
 	}
 
-	int Player::getCoins()
+	int Player::getCoins() const
 	{
 		return mCoins;
 	}
@@ -65,7 +65,7 @@ namespace Seven_Wonders {
 		mCoins = mCoins + changeInCoins;
 	}
 
-	int Player::getWood()
+	int Player::getWood() const
 	{
 		return mWood;
 	}
@@ -75,7 +75,7 @@ namespace Seven_Wonders {
 		mWood = mWood + changeInWood;
 	}
 
-	int Player::getStone()
+	int Player::getStone() const
 	{
 		return mStone;
 	}
@@ -85,7 +85,7 @@ namespace Seven_Wonders {
 		mStone = mStone + changeInStone;
 	}
 
-	int Player::getClay()
+	int Player::getClay() const
 	{
 		return mClay;
 	}
@@ -95,7 +95,7 @@ namespace Seven_Wonders {
 		mClay = mClay + changeInClay;
 	}
 
-	int Player::getPapyrus()
+	int Player::getPapyrus() const
 	{
 		return mPapyrus;
 	}
@@ -105,17 +105,17 @@ namespace Seven_Wonders {
 		mPapyrus = mPapyrus + changeInPapyrus;
 	}
 
-	int Player::getGlass()
+	int Player::getGlass() const
 	{
 		return mGlass;
 	}
 
-	int Player::getWildBasic()
+	int Player::getWildBasic() const
 	{
 		return flags.theGreatLighthouseResourcesFlag + flags.caravenseryResourcesFlag;
 	}
 
-	int Player::getWildAdv()
+	int Player::getWildAdv() const
 	{
 		return flags.piraeusResourcesFlag + flags.forumResourcesFlag;
 	}
@@ -126,7 +126,7 @@ namespace Seven_Wonders {
 		mGlass = mGlass + changeInGlass;
 	}
 
-	int Player::getDiscardGoldValue()
+	int Player::getDiscardGoldValue() const
 	{
 		int yellowCardCount = 0;
 		if (!playerCity.empty()) // check if there are cards in the city yet
