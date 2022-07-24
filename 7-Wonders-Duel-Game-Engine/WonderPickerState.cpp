@@ -50,7 +50,32 @@ void WonderPickerState::draw(const float dt)
 
 void WonderPickerState::update(const float dt)
 {
+	executeAI();
+}
 
+void WonderPickerState::executeAI()
+{
+	if (numOfPickedCards < 8)
+	{
+		pickWonder(wonderIdxPickOrder[numOfPickedCards]);
+	}
+}
+
+void WonderPickerState::pickWonder(int idxWonder)
+{
+	bool wondersPicked = false;
+	Player* player = &p_game->world.player1;
+	if (numOfPickedCards == 1 || numOfPickedCards == 2 || numOfPickedCards == 4 || numOfPickedCards == 7)
+		player = &p_game->world.player2;
+
+	player->playerWonderDeck.push_back(wonderBoard[idxWonder]);
+	wonderBoard[idxWonder] = nullptr;
+	mWonderRects[idxWonder].setPosition(-400, -400);
+	vectorWonderFloatRects[idxWonder] = mWonderRects[idxWonder].getGlobalBounds();
+	numOfPickedCards++;
+	if (numOfPickedCards == 4) pickedFourCards = true;
+	if (numOfPickedCards == 8) wondersPicked = true;
+	if (wondersPicked == true) p_game->changeState(new GamePlayingState(p_game)); // push card picker state
 }
 
 void WonderPickerState::handleInput()
@@ -59,8 +84,6 @@ void WonderPickerState::handleInput()
 	bool poppingState = false;
 	bool wonderPickState = false;
 	bool wondersPicked = false;
-
-
 
 	while (p_game->window.pollEvent(event))
 	{
@@ -241,6 +264,6 @@ WonderPickerState::WonderPickerState(Game * game, GameStateStart * gamestatestar
 	gameBoard.setScale(0.83f, 0.83f);
 	gameBoard.setPosition(10.0f, 75.0f);
 
-
+	wonderIdxPickOrder = ai.wonderSelectAI(p_game->world.wonderCardDeck);
 }
 

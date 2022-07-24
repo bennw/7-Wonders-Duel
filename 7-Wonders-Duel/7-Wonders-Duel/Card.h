@@ -19,7 +19,7 @@ namespace Seven_Wonders {
 		void setOwner(int playerNumber);
 		string getName();
 		void setName(int cardIndexNumber);
-		int getIndex();
+		int getIndex() const;
 		void setIndex(int cardIndexNumber);
 		int getAge();
 		void setAge(int cardIndexNumber);

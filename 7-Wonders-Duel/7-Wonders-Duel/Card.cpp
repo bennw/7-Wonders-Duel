@@ -51,7 +51,7 @@ namespace Seven_Wonders {
 		mName = cardName[cardIndexNumber];
 	}
 
-	int Card::getIndex()
+	int Card::getIndex() const
 	{
 		return mIndex;
 	}

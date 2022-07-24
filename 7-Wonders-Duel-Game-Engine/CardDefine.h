@@ -74,4 +74,17 @@ enum {
 	IdxScientistsGuild,
 	IdxMoneylendersGuild,
 	IdxTacticiansGuild,
+
+	IdxAppianWay,
+	IdxCircusMaximus,
+	IdxColossus,
+	IdxGreatLibrary,
+	IdxGreatLighthouse,
+	IdxHangingGardens,
+	IdxMausoleum,
+	IdxPiraeus,
+	IdxPyramids,
+	IdxSphinx,
+	IdxZeus,
+	IdxArtemis,
 };

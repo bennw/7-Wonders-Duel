@@ -230,7 +230,7 @@ namespace Seven_Wonders {
 			if (currentPlayer == &player1) currentPlayer = &player2;
 			else if (currentPlayer == &player2) currentPlayer = &player1;
 
-			executeAI();
+			//executeAI();
 		}
 	}
 
@@ -360,7 +360,7 @@ namespace Seven_Wonders {
 
 		if (currentPlayer == &player1) currentPlayer = &player2;
 		else if (currentPlayer == &player2) currentPlayer = &player1;
-		executeAI();
+		//executeAI();
 	}
 
 	/* Run when a player picks the discard card option
@@ -401,7 +401,7 @@ namespace Seven_Wonders {
 
 		if (currentPlayer == &player1) currentPlayer = &player2;
 		else if (currentPlayer == &player2) currentPlayer = &player1;
-		executeAI();
+		//executeAI();
 
 	}
 
@@ -486,7 +486,7 @@ namespace Seven_Wonders {
 
 		if (repeatTurn == true) repeatTurn = false; // re-setting the repeatturn flag
 
-		if (bNextTurn) executeAI();
+		//if (bNextTurn) executeAI();
 	}
 
 	void World::destroyCard(int cardIndex, Player & targetplayer)
@@ -837,8 +837,9 @@ namespace Seven_Wonders {
 		ai.updateEV();
 	}
 
-	void World::executeAI()
+	bool World::executeAI()
 	{
+		bool ret = false;
 		bool isBoardValid = false;
 		int idxBoardSelected = -1;
 		int EVSelected = -100;
@@ -848,7 +849,7 @@ namespace Seven_Wonders {
 		int opponentEV1st = -100, opponentEV2nd = -100, discardEVSelected = -1, idxDiscardSelected;
 
 		// execute Player 1's turn using AI
-		if (currentPlayer == &player2) return;
+		if (currentPlayer == &player2) return ret;
 
 		for (int i = 0; i < 20; ++i)
 		{
@@ -864,7 +865,7 @@ namespace Seven_Wonders {
 			}
 		}
 
-		if (!isBoardValid) return; // all cards of that age have been taken already
+		if (!isBoardValid) return ret; // all cards of that age have been taken already
 		
 		if (bstate.discardEV[0] > EVSelected)
 		{
@@ -877,11 +878,15 @@ namespace Seven_Wonders {
 				}
 			}
 			discardCard(idxDiscardSelected);
+			ret = true;
 		}
 		else if (idxBoardSelected >= 0)
 		{
 			buildCard(idxBoardSelected);
+			ret = true;
 		}
+
+		return ret;
 	}
 
 	void World::Setup()

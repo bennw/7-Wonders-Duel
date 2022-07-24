@@ -1,5 +1,6 @@
 #pragma once
 #include "BoardState.h"
+#include <vector>
 
 class AI
 {
@@ -11,6 +12,9 @@ public:
 	void updateEV();
 	void updateDiscardEV(int age);
 	void updateRequiredOwnedResources(int p);
+	// retval[0] = m --> first wonder selected should be wonderList[m]
+	// retval[1] = n --> second wonder selected should be wonderList[n] etc.
+	vector<int> wonderSelectAI(const vector<Card*> &wonderList);
 
 	// internal state variables, used in AI computation
 	int requiredWood[2] = { 0 };
@@ -32,6 +36,7 @@ public:
 	bool hasAllAdv[2] = { 0 };
 
 	int cardTriggerExpose[20][2] = { -1 }; // [c][0] = left card, [c][1] = right card, -1 = no trigger
+
 private:
 	BoardState* bstate;
 };

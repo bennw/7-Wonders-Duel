@@ -18,6 +18,10 @@ void GameStateStart::update(const float dt)
 		startGameText.setRotation(startGameText.getRotation() + mRotatingSpeed);
 		exitGameText.setRotation(exitGameText.getRotation() + mRotatingSpeed);
 	}
+	// auto start game
+	gameStartSound.play();
+	p_game->world.Setup();
+	p_game->pushState(new WonderPickerState(p_game, this));
 }
 
 void GameStateStart::handleInput()
@@ -136,6 +140,5 @@ GameStateStart::GameStateStart(Game * game)
 
 	menuMusic.openFromFile("Resources/Sounds/menumusic.ogg");
 	//menuMusic.play();
-	
 }
 

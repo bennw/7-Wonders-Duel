@@ -347,3 +347,75 @@ void AI::updateRequiredOwnedResources(int p)
 			wonderHasBasic[p] = 1;
 	}
 }
+
+vector<int> AI::wonderSelectAI(const vector<Card*> &wonderList)
+{
+	vector<int> result;
+	vector<int> wonderEV;
+	int EV;
+
+	for (const Card* c : wonderList)
+	{
+		switch (c->getIndex())
+		{
+		case IdxPiraeus:
+			EV = 100;
+			break;
+		case IdxArtemis:
+			EV = 99;
+			break;
+		case IdxHangingGardens:
+			EV = 98;
+			break;
+		case IdxAppianWay:
+			EV = 97;
+			break;
+		case IdxSphinx:
+			EV = 90;
+			break;
+		case IdxMausoleum:
+			EV = 89;
+			break;
+		case IdxGreatLibrary:
+			EV = 88;
+			break;
+		case IdxGreatLighthouse:
+			EV = 87;
+			break;
+		case IdxColossus:
+			EV = 86;
+			break;
+		case IdxZeus:
+			EV = 85;
+			break;
+		case IdxCircusMaximus:
+			EV = 84;
+			break;
+		case IdxPyramids:
+			EV = 70;
+			break;
+		}
+		wonderEV.push_back(EV);
+	}
+
+	for (int i = 0; i < 8; i += 4)
+	{
+		for (int jj = 0; jj < 4; ++jj)
+		{
+			int maxEV = 0;
+			int maxIdx = -1;
+			for (int j = 0; j < 4; ++j)
+			{
+				if (wonderEV[i + j] > maxEV)
+				{
+					maxEV = wonderEV[i + j];
+					maxIdx = i + j;
+				}
+			}
+			// push best EV wonder into result
+			result.push_back(maxIdx);
+			wonderEV[maxIdx] = -1;
+		}
+	}
+	return result;
+}

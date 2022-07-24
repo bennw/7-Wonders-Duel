@@ -350,6 +350,11 @@ void GamePlayingState::drawResourceIcons(const float dt)
 
 void GamePlayingState::update(const float dt)
 {
+	if (p_game->world.executeAI())
+	{
+		if (p_game->world.checkForNewAge() == true) resetSprites();
+	}
+
 	checkForDestroyingBrownCard();
 	checkForDestroyingGrayCard();
 	checkForBuildingFromDiscard();
@@ -1155,7 +1160,7 @@ GamePlayingState::GamePlayingState(Game * game)
 	rectPlayer1City = player1City.getGlobalBounds();
 	rectPlayer2City = player2City.getGlobalBounds();
 
-	p_game->world.executeAI();
+	//p_game->world.executeAI();
 }
 
 void GamePlayingState::resetSprites()

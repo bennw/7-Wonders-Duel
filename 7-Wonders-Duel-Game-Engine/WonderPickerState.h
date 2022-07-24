@@ -107,6 +107,10 @@ public:
 	sf::Vector2f const GAME_BOARD_SIZE = { 150, 750 };
 	sf::Vector2f const WONDER_GUI_SIZE = { 150, 750 };
 
+	// AI for wonder picking
+	AI ai;
+	vector<int> wonderIdxPickOrder;
+	void executeAI();
 
 	//int const CARD_STRUCTURE_VERT_CENTER = 770;
 	//int const CARD_VERTICAL_SPACING = 30;
@@ -119,6 +123,8 @@ public:
 
 	WonderPickerState(Game * game, GameStateStart * gamestatestart);
 	~WonderPickerState() {};
+
+	void pickWonder(int idxWonder);
 };
 
 

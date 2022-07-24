@@ -34,7 +34,7 @@ namespace Seven_Wonders {
 		int getNumBlocked(int i);
 		int getTriggerExpose(int i, int &l, int &r);
 		void updateGameState();
-		void executeAI();
+		bool executeAI(); // returns true if action was taken
 		void setGameLog(int p, string strLog, int idxCard, int coinsDelta);
 
 		vector<Card> age1Deck;
